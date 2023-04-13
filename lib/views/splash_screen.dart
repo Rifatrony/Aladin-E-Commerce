@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:aladin_ecommerce/views/dashboard_screen.dart';
+import 'package:aladin_ecommerce/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +15,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 1), () { Get.offAll(const DashboardScreen());});
+    Timer(const Duration(seconds: 1), () { Get.offAll(const LoginScreen());});
   }
   
   @override
