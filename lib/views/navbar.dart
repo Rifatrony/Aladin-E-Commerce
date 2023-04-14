@@ -1,4 +1,5 @@
 import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
+import 'package:aladin_ecommerce/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,9 +27,9 @@ class Navbar extends StatelessWidget {
                     fontSize: 16
                   ),
                 ),
-                accountEmail: const Text(
-                  "Email", 
-                  style: TextStyle(
+                accountEmail: Text(
+                  profileViewModel.user.value.user!.phone.toString(), 
+                  style: const TextStyle(
                     color: Colors.white, 
                     fontSize: 14
                   ),
@@ -88,6 +89,7 @@ class Navbar extends StatelessWidget {
             icon: Icons.person_outline, 
             onPress: (){
               Navigator.pop(context);
+              Get.to(const ProfileScreen());
             }
           ),
 

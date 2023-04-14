@@ -9,4 +9,10 @@ class AppUrl {
   static const String bestSellingUrl = '$baseUrl/product/sellings';
   static const String latestUrl = '$baseUrl/product/sale';
   static const String topInCategoriesUrl = '$baseUrl/product/products';
+
+  static const String categoryUrl = '$baseUrl/category/index';
+  static const String productDetailsUrl = '$baseUrl/product/details';
+
+  static const String addToCartUrl = '$baseUrl/carts/add';
+
 }

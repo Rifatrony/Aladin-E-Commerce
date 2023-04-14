@@ -1,10 +1,12 @@
 import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
+import 'package:aladin_ecommerce/view_model/category/category_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/best_selling_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/feature_product_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/latest_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/sale_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/top_in_categories_view_model.dart';
 import 'package:aladin_ecommerce/views/navbar.dart';
+import 'package:aladin_ecommerce/views/product_details_screen.dart';
 import 'package:aladin_ecommerce/widgets/app_text.dart';
 import 'package:aladin_ecommerce/widgets/title_text.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final latestViewModel = Get.put(LatestViewModel());
   final bestSellingViewModel = Get.put(BestSellingViewModel());
   final topInCategoriesViewModel = Get.put(TopInCategoriesViewModel());
+  final categoryViewModel = Get.put(CategoryViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +105,62 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
               ),
             ),
-            const CategoryWidget(),
+            Obx( () =>
+              Container(
+                height: Get.height * 0.25,
+                padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
+                child: categoryViewModel.loading.value 
+                ? const Center(child: CircularProgressIndicator())
+                : GridView.builder(
+                    itemCount: categoryViewModel.category.value.categories!.data!.length,
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 80 / 90,
+                      crossAxisCount: 2,
+                    ),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          //Get.to(const CategoryWiseRestaurantPage());
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 60,
+                              width: 60,
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(14),
+                                color: Colors.grey.shade200,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(14),
+                                child: Image(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      categoryViewModel.category.value.categories!.data![index].image.toString()),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Text(
+                              categoryViewModel.category.value.categories!.data![index].name.toString(),
+                              maxLines: 1,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: Colors.black
+                              ),
+                            )
+                           
+                          ],
+                        ),
+                      );
+                    }),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TitleText(
@@ -122,111 +180,119 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemCount: latestViewModel
                             .latestProduct.value.products!.data!.length,
                         itemBuilder: (context, index) {
-                          return Wrap(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  left: 8,
-                                ),
-                                height: Get.height * 0.23,
-                                width: Get.width * 0.34,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(16)),
-                                        child: Image.network(
-                                          latestViewModel.latestProduct.value
-                                              .products!.data![index].thumbnail!
-                                              .toString(),
-                                          height: 10,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
+                          return InkWell(
+                            onTap: () {
+                              Get.to(()=> ProductDetails(slug: latestViewModel.latestProduct.value
+                                                .products!.data![index].slug!
+                                                .toString()));
+                            },
+                            child: Wrap(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8,
+                                  ),
+                                  height: Get.height * 0.23,
+                                  width: Get.width * 0.34,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(16)),
+                                          child: Image.network(
+                                            latestViewModel.latestProduct.value
+                                                .products!.data![index].thumbnail!
+                                                .toString(),
+                                            height: 10,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              latestViewModel
-                                                  .latestProduct
-                                                  .value
-                                                  .products!
-                                                  .data![index]
-                                                  .name
-                                                  .toString(),
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 4,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            const SizedBox(
+                                              height: 8,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.005,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                AppText(
-                                                  title: latestViewModel
-                                                      .latestProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .discountedPrice
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.black87,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                AppText(
-                                                  title: latestViewModel
-                                                      .latestProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .discountedPrice
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  textDecoration: TextDecoration
-                                                      .lineThrough,
-                                                ),
-                                              ],
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(
+                                                latestViewModel
+                                                    .latestProduct
+                                                    .value
+                                                    .products!
+                                                    .data![index]
+                                                    .name
+                                                    .toString(),
+                                                
+                                                textAlign: TextAlign.start,
+                                                maxLines: 3,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.015,
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: Get.height * 0.005,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  AppText(
+                                                    title: latestViewModel
+                                                        .latestProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .discountedPrice
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  AppText(
+                                                    title: latestViewModel
+                                                        .latestProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .discountedPrice
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.grey.shade600,
+                                                    fontWeight: FontWeight.w500,
+                                                    textDecoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.015,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }),
               ),
@@ -250,115 +316,122 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemCount: bestSellingViewModel
                             .bestSellProduct.value.products!.data!.length,
                         itemBuilder: (context, index) {
-                          return Wrap(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  left: 8,
-                                ),
-                                height: Get.height * 0.23,
-                                width: Get.width * 0.34,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(16)),
-                                        child: Image.network(
-                                          bestSellingViewModel
-                                              .bestSellProduct
-                                              .value
-                                              .products!
-                                              .data![index]
-                                              .thumbnail!
-                                              .toString(),
-                                          height: 10,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
+                          return InkWell(
+                            onTap: () {
+                              Get.to(()=> ProductDetails(slug: bestSellingViewModel.bestSellProduct.value
+                                                .products!.data![index].slug!
+                                                .toString()));
+                            },
+                            child: Wrap(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8,
+                                  ),
+                                  height: Get.height * 0.23,
+                                  width: Get.width * 0.34,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(16)),
+                                          child: Image.network(
+                                            bestSellingViewModel
+                                                .bestSellProduct
+                                                .value
+                                                .products!
+                                                .data![index]
+                                                .thumbnail!
+                                                .toString(),
+                                            height: 10,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              bestSellingViewModel
-                                                  .bestSellProduct
-                                                  .value
-                                                  .products!
-                                                  .data![index]
-                                                  .name
-                                                  .toString(),
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 4,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            const SizedBox(
+                                              height: 8,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.005,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                AppText(
-                                                  title: bestSellingViewModel
-                                                      .bestSellProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .discountedPrice
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.black87,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                AppText(
-                                                  title: bestSellingViewModel
-                                                      .bestSellProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .price
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  textDecoration: TextDecoration
-                                                      .lineThrough,
-                                                ),
-                                              ],
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(
+                                                bestSellingViewModel
+                                                    .bestSellProduct
+                                                    .value
+                                                    .products!
+                                                    .data![index]
+                                                    .name
+                                                    .toString(),
+                                                textAlign: TextAlign.justify,
+                                                maxLines: 4,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.015,
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: Get.height * 0.005,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  AppText(
+                                                    title: bestSellingViewModel
+                                                        .bestSellProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .discountedPrice
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  AppText(
+                                                    title: bestSellingViewModel
+                                                        .bestSellProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .price
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.grey.shade600,
+                                                    fontWeight: FontWeight.w500,
+                                                    textDecoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.015,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }),
               ),
@@ -382,107 +455,114 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemCount: saleViewModel
                             .saleProduct.value.products!.data!.length,
                         itemBuilder: (context, index) {
-                          return Wrap(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  left: 8,
-                                ),
-                                height: Get.height * 0.23,
-                                width: Get.width * 0.34,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(16)),
-                                        child: Image.network(
-                                          saleViewModel.saleProduct.value
-                                              .products!.data![index].thumbnail!
-                                              .toString(),
-                                          height: 10,
-                                          width: double.infinity,
-                                          fit: BoxFit.cover,
+                          return InkWell(
+                            onTap: () {
+                              Get.to(()=> ProductDetails(slug: saleViewModel.saleProduct.value
+                                                .products!.data![index].slug!
+                                                .toString()));
+                            },
+                            child: Wrap(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8,
+                                  ),
+                                  height: Get.height * 0.23,
+                                  width: Get.width * 0.34,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(16)),
+                                          child: Image.network(
+                                            saleViewModel.saleProduct.value
+                                                .products!.data![index].thumbnail!
+                                                .toString(),
+                                            height: 10,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              saleViewModel.saleProduct.value
-                                                  .products!.data![index].name
-                                                  .toString(),
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 4,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            const SizedBox(
+                                              height: 8,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.005,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                AppText(
-                                                  title: saleViewModel
-                                                      .saleProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .discountedPrice
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.black87,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                                AppText(
-                                                  title: saleViewModel
-                                                      .saleProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .price
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  textDecoration: TextDecoration
-                                                      .lineThrough,
-                                                ),
-                                              ],
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(
+                                                saleViewModel.saleProduct.value
+                                                    .products!.data![index].name
+                                                    .toString(),
+                                                textAlign: TextAlign.justify,
+                                                maxLines: 3,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.015,
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: Get.height * 0.005,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  AppText(
+                                                    title: saleViewModel
+                                                        .saleProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .discountedPrice
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  AppText(
+                                                    title: saleViewModel
+                                                        .saleProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .price
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.grey.shade600,
+                                                    fontWeight: FontWeight.w500,
+                                                    textDecoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.015,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }),
               ),
@@ -506,141 +586,148 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemCount: featureViewModel
                             .featureProduct.value.products!.data!.length,
                         itemBuilder: (context, index) {
-                          return Wrap(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  left: 8,
-                                ),
-                                height: Get.height * 0.23,
-                                width: Get.width * 0.34,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(15)),
-                                            child: Image.network(
-                                              featureViewModel
-                                                  .featureProduct
-                                                  .value
-                                                  .products!
-                                                  .data![index]
-                                                  .thumbnail
-                                                  .toString(),
-                                              height: 100,
-                                              width: double.infinity,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 50,
-                                            top: 10,
-                                            child: Container(
-                                              height: Get.height * 0.03,
-                                              width: 70,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: Colors.white70),
-                                              child: const Center(
-                                                child: Text(
-                                                  "6 % Off",
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 12),
-                                                ),
+                          return InkWell(
+                            onTap: () {
+                              Get.to(()=> ProductDetails(slug: featureViewModel.featureProduct.value
+                                                .products!.data![index].slug!
+                                                .toString()));
+                            },
+                            child: Wrap(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8,
+                                  ),
+                                  height: Get.height * 0.23,
+                                  width: Get.width * 0.34,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(15)),
+                                              child: Image.network(
+                                                featureViewModel
+                                                    .featureProduct
+                                                    .value
+                                                    .products!
+                                                    .data![index]
+                                                    .thumbnail
+                                                    .toString(),
+                                                height: 100,
+                                                width: double.infinity,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              featureViewModel
-                                                  .featureProduct
-                                                  .value
-                                                  .products!
-                                                  .data![index]
-                                                  .name
-                                                  .toString(),
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 4,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.005,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                AppText(
-                                                  title: featureViewModel
-                                                      .featureProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .discountedPrice
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.black87,
-                                                  fontWeight: FontWeight.w500,
+                                            Positioned(
+                                              left: 50,
+                                              top: 10,
+                                              child: Container(
+                                                height: Get.height * 0.03,
+                                                width: 70,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: Colors.white70),
+                                                child: const Center(
+                                                  child: Text(
+                                                    "6 % Off",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12),
+                                                  ),
                                                 ),
-                                                AppText(
-                                                  title: featureViewModel
-                                                      .featureProduct
-                                                      .value
-                                                      .products!
-                                                      .data![index]
-                                                      .price
-                                                      .toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  textDecoration: TextDecoration
-                                                      .lineThrough,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.015,
-                                          ),
-                                        ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(
+                                                featureViewModel
+                                                    .featureProduct
+                                                    .value
+                                                    .products!
+                                                    .data![index]
+                                                    .name
+                                                    .toString(),
+                                                textAlign: TextAlign.justify,
+                                                maxLines: 3,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.005,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  AppText(
+                                                    title: featureViewModel
+                                                        .featureProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .discountedPrice
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  AppText(
+                                                    title: featureViewModel
+                                                        .featureProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .price
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.grey.shade600,
+                                                    fontWeight: FontWeight.w500,
+                                                    textDecoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.015,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }),
               ),
@@ -671,119 +758,155 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ? const Center(child: CircularProgressIndicator())
                     : ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: topInCategoriesViewModel.topInCategoriesProduct.value.products!.data!.length,
+                        itemCount: topInCategoriesViewModel
+                            .topInCategoriesProduct
+                            .value
+                            .products!
+                            .data!
+                            .length,
                         itemBuilder: (context, index) {
-                          return Wrap(
-                            children: [
-                              Container(
-                                margin: const EdgeInsets.only(
-                                  left: 8,
-                                ),
-                                height: Get.height * 0.23,
-                                width: Get.width * 0.34,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Expanded(
-                                      child: Stack(
-                                        clipBehavior: Clip.none,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(15)),
-                                            child: Image.network(
-                                              topInCategoriesViewModel.topInCategoriesProduct.value.products!.data![index].thumbnail.toString(),
-                                              height: 100,
-                                              width: double.infinity,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Positioned(
-                                            left: 50,
-                                            top: 10,
-                                            child: Container(
-                                              height: Get.height * 0.03,
-                                              width: 70,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  color: Colors.white70),
-                                              child: Center(
-                                                child: Text(
-                                                  "${topInCategoriesViewModel.topInCategoriesProduct.value.products!.data![index].discount} %",
-                                                  style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 12),
-                                                ),
+                          return InkWell(
+                            onTap: () {
+                              Get.to(()=> ProductDetails(slug: topInCategoriesViewModel.topInCategoriesProduct.value
+                                                .products!.data![index].slug!
+                                                .toString()));
+                            },
+                            child: Wrap(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(
+                                    left: 8,
+                                  ),
+                                  height: Get.height * 0.23,
+                                  width: Get.width * 0.34,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade100,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Stack(
+                                          clipBehavior: Clip.none,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(15)),
+                                              child: Image.network(
+                                                topInCategoriesViewModel
+                                                    .topInCategoriesProduct
+                                                    .value
+                                                    .products!
+                                                    .data![index]
+                                                    .thumbnail
+                                                    .toString(),
+                                                height: 100,
+                                                width: double.infinity,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 5),
-                                            child: Text(
-                                              topInCategoriesViewModel.topInCategoriesProduct.value.products!.data![index].name.toString(),
-                                              textAlign: TextAlign.justify,
-                                              maxLines: 4,
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w400),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.005,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                AppText(
-                                                  title: topInCategoriesViewModel.topInCategoriesProduct.value.products!.data![index].discountedPrice.toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.black87,
-                                                  fontWeight: FontWeight.w500,
+                                            Positioned(
+                                              left: 40,
+                                              top: 10,
+                                              child: Container(
+                                                height: Get.height * 0.03,
+                                                width: 70,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(10),
+                                                    color: Colors.green),
+                                                child: Center(
+                                                  child: Text(
+                                                    "${topInCategoriesViewModel.topInCategoriesProduct.value.products!.data![index].discount} %",
+                                                    style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 12),
+                                                  ),
                                                 ),
-                                                AppText(
-                                                  title: topInCategoriesViewModel.topInCategoriesProduct.value.products!.data![index].price.toString(),
-                                                  textSize: 13.0,
-                                                  color: Colors.grey.shade600,
-                                                  fontWeight: FontWeight.w500,
-                                                  textDecoration: TextDecoration
-                                                      .lineThrough,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: Get.height * 0.015,
-                                          ),
-                                        ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 5),
+                                              child: Text(
+                                                topInCategoriesViewModel
+                                                    .topInCategoriesProduct
+                                                    .value
+                                                    .products!
+                                                    .data![index]
+                                                    .name
+                                                    .toString(),
+                                                textAlign: TextAlign.justify,
+                                                maxLines: 3,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.005,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  AppText(
+                                                    title: topInCategoriesViewModel
+                                                        .topInCategoriesProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .discountedPrice
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.black87,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  AppText(
+                                                    title: topInCategoriesViewModel
+                                                        .topInCategoriesProduct
+                                                        .value
+                                                        .products!
+                                                        .data![index]
+                                                        .price
+                                                        .toString(),
+                                                    textSize: 13.0,
+                                                    color: Colors.grey.shade600,
+                                                    fontWeight: FontWeight.w500,
+                                                    textDecoration: TextDecoration
+                                                        .lineThrough,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: Get.height * 0.015,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         }),
               ),
@@ -857,7 +980,7 @@ class Product extends StatelessWidget {
                               child: Text(
                                 "Ekel Green Tea AHA BHA PHA Brightening Toner (250ml)",
                                 textAlign: TextAlign.justify,
-                                maxLines: 4,
+                                maxLines: 3,
                                 style: TextStyle(
                                     fontSize: 12, fontWeight: FontWeight.w400),
                               ),
@@ -898,61 +1021,6 @@ class Product extends StatelessWidget {
                   ),
                 ),
               ],
-            );
-          }),
-    );
-  }
-}
-
-class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: Get.height * 0.25,
-      padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
-      child: GridView.builder(
-          itemCount: 10,
-          scrollDirection: Axis.horizontal,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 65 / 52,
-            crossAxisCount: 2,
-          ),
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                //Get.to(const CategoryWiseRestaurantPage());
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 60,
-                    width: 60,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      color: Colors.grey.shade200,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(14),
-                      child: const Image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://img.freepik.com/free-photo/fresh-milk-mug-jug-wooden-table_114579-18233.jpg"),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.01,
-                  ),
-                  const AppText(
-                      title: "Name", textSize: 12.0, color: Colors.black)
-                ],
-              ),
             );
           }),
     );

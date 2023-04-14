@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class ProfileViewModel extends GetxController{
   final repostiory = Profilerepository();
   final user = ProfileModel().obs;
-  var loading = true.obs;
+  var loading = false.obs;
 
   void setLoading(bool value){
     loading.value = value;
@@ -22,6 +22,7 @@ class ProfileViewModel extends GetxController{
   }
 
   Future<void> getUserProfile() async {
+    setLoading(true);
     try{
       repostiory.getUserProfile().then((value) {
         setLoading(false); 
