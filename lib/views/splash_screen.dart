@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:aladin_ecommerce/views/dashboard_screen.dart';
 import 'package:aladin_ecommerce/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +17,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 1), () { Get.offAll(const LoginScreen());});
+    checkLogin();
+  }
+
+  Future<void> checkLogin() async{
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('access_token');
+
+    if (accessToken != null) {
+      Timer(const Duration(seconds: 3), () {
+      Get.offAll(const DashboardScreen());
+    });
+    }
+    else{
+      Timer(const Duration(seconds: 3), () {
+      Get.offAll(const LoginScreen());
+    });
+    }
   }
   
   @override

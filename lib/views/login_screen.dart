@@ -25,95 +25,109 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Column(
-          children: [
-            SizedBox(
-              height: Get.height * 0.1,
-            ),
-            const Text(
-              "Welcome back\n\nLogin Here",
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: Get.height * 0.05,
-            ),
-            TextFormField(
-              controller: loginViewModel.phoneController.value,
-              keyboardType: TextInputType.phone,
-              style: const TextStyle(fontSize: 14),
-              decoration: InputDecoration(
-                  filled: true,
-                  isDense: true,
-                  fillColor: Colors.grey[100], // set your desired color here
-                  labelText: 'Phone',
-                  contentPadding: const EdgeInsets.all(16),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(36.0),
-                      borderSide: BorderSide.none),
-                  prefixIcon: const Icon(Icons.phone_outlined)),
-            ),
-            SizedBox(height: Get.height * 0.02),
-            TextFormField(
-              controller: loginViewModel.passwordController.value,
-              obscureText: true,
-              style: const TextStyle(fontSize: 14),
-              decoration: InputDecoration(
-                  filled: true,
-                  isDense: true,
-                  fillColor: Colors.grey[100], // set your desired color here
-                  labelText: 'Password',
-                  contentPadding: const EdgeInsets.all(16),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(36.0),
-                      borderSide: BorderSide.none),
-                  prefixIcon: const Icon(Icons.lock_outline)),
-            ),
-            SizedBox(height: Get.height * 0.03),
-            AppButton(
-                onPress: () {
-                  if (loginViewModel.phoneController.value.text.isEmpty) {
-                    Utils.snackBar("Phone Number Required",
-                        "Please enter your phone number");
-                  } else if (loginViewModel
-                      .passwordController.value.text.isEmpty) {
-                    Utils.snackBar(
-                        "Password Required", "Please enter your password");
-                  } else if (loginViewModel
-                          .passwordController.value.text.length <
-                      6) {
-                    Utils.snackBar(
-                        "Password Number Required", "Minimum password is 6");
-                  } else {
-                    Map data = {
-                      'phone': loginViewModel.phoneController.value.text.trim(),
-                      'password':
-                          loginViewModel.passwordController.value.text.trim()
-                    };
-                    loginViewModel.loginApi(data);
-                  }
-                },
-                title: "Login"),
-            SizedBox(height: Get.height * 0.05),
-            InkWell(
-              onTap: () {
-                Get.to(() => const SignUpScreen());
-              },
-              child: RichText(
-                text: const TextSpan(
-                  text: 'No account yet? ',
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                  children: [
-                    TextSpan(
-                      text: 'Sign Up',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.blue),
-                    ),
-                  ],
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: Get.height * 0.1,
               ),
-            )
-          ],
+              const Text(
+                "Welcome back\n\nLogin Here",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: Get.height * 0.05,
+              ),
+              TextFormField(
+                controller: loginViewModel.phoneController.value,
+                focusNode: loginViewModel.phoneFocusNode.value,
+                keyboardType: TextInputType.phone,
+                style: const TextStyle(fontSize: 14),
+                decoration: InputDecoration(
+                    filled: true,
+                    isDense: true,
+                    fillColor: Colors.grey[100], // set your desired color here
+                    labelText: 'Phone',
+                    contentPadding: const EdgeInsets.all(16),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(36.0),
+                        borderSide: BorderSide.none),
+                    prefixIcon: const Icon(Icons.phone_outlined)),
+        
+                onFieldSubmitted: (value) {
+                  Utils.fieldFocusChange(context, loginViewModel.phoneFocusNode.value, loginViewModel.passwordFocusNode.value);
+                },
+                
+              ),
+              SizedBox(height: Get.height * 0.02),
+              TextFormField(
+                controller: loginViewModel.passwordController.value,
+                focusNode: loginViewModel.passwordFocusNode.value,
+                obscureText: true,
+                style: const TextStyle(fontSize: 14),
+                decoration: InputDecoration(
+                    filled: true,
+                    isDense: true,
+                    fillColor: Colors.grey[100], // set your desired color here
+                    labelText: 'Password',
+                    contentPadding: const EdgeInsets.all(16),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(36.0),
+                        borderSide: BorderSide.none),
+                    prefixIcon: const Icon(Icons.lock_outline)),
+              ),
+              SizedBox(height: Get.height * 0.03),
+              Obx( () =>
+                AppButton(
+                  loading: loginViewModel.loading.value,
+                    onPress: () {
+                      if (loginViewModel.phoneController.value.text.isEmpty) {
+                        Utils.snackBar("Phone Number Required",
+                            "Please enter your phone number");
+                      } else if (loginViewModel
+                          .passwordController.value.text.isEmpty) {
+                        Utils.snackBar(
+                            "Password Required", "Please enter your password");
+                      } else if (loginViewModel
+                              .passwordController.value.text.length <
+                          6) {
+                        Utils.snackBar(
+                            "Password Number Required", "Minimum password is 6");
+                      } else {
+                        Map data = {
+                          'phone': loginViewModel.phoneController.value.text.trim(),
+                          'password':
+                              loginViewModel.passwordController.value.text.trim(),
+                          'device_name': 'redmi',
+        
+                        };
+                        loginViewModel.loginApi(data);
+                      }
+                    },
+                    title: "Login"),
+              ),
+              SizedBox(height: Get.height * 0.05),
+              InkWell(
+                onTap: () {
+                  Get.to(() => const SignUpScreen());
+                },
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'No account yet? ',
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    children: [
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:aladin_ecommerce/handler/app_exception.dart';
 import 'package:aladin_ecommerce/services/BaseApiServices.dart';
 import 'package:aladin_ecommerce/view_model/auth/user_preference.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkApiServices extends BaseApiServices {
@@ -21,6 +22,9 @@ class NetworkApiServices extends BaseApiServices {
     
     try {
       var token = await UserPrefernce().getAccessToken();
+      if (kDebugMode) {
+        print(token);
+      }
       final response =
           await http.get(
             uri,
@@ -110,6 +114,9 @@ class NetworkApiServices extends BaseApiServices {
   }
   
   returnResponse(http.Response response) {
+    if (kDebugMode) {
+      print(response.body);
+    }
     switch (response.statusCode) {
 
       case 200:

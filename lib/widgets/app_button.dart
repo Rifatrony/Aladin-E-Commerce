@@ -25,17 +25,15 @@ class AppButton extends StatelessWidget {
       child: Container(
         height: 45,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: color
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white
-            ),
-          ),
-        ),
+            borderRadius: BorderRadius.circular(16), color: color),
+        child: loading
+            ? const Center(child: CircularProgressIndicator(color: Colors.white,))
+            : Center(
+                child: Text(
+                  title,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
       ),
     );
   }
