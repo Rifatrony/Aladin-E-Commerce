@@ -14,5 +14,9 @@ class AppUrl {
   static const String productDetailsUrl = '$baseUrl/product/details';
 
   static const String addToCartUrl = '$baseUrl/carts/add';
+  static const String getCartUrl = '$baseUrl/carts';
+
+  static const String orderUrl = '$baseUrl/user/orders';
+  static const String orderDetailsUrl = '$baseUrl/user/order/details';
 
 }

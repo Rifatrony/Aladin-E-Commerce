@@ -11,32 +11,26 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkApiServices extends BaseApiServices {
-
   static const int TIME_OUT_DURATION = 20;
-   
+
   @override
   Future getApi(String url) async {
     dynamic responseJson;
 
     var uri = Uri.parse(url);
-    
+
     try {
       var token = await UserPrefernce().getAccessToken();
       if (kDebugMode) {
         print(token);
       }
-      final response =
-          await http.get(
-            uri,
-            headers: {
-              'Authorization': 'Bearer $token'
-            }
-          ).timeout(const Duration(seconds: 20));
-          responseJson = returnResponse(response);
-    } on SocketException{
+      final response = await http.get(uri, headers: {
+        'Authorization': 'Bearer $token'
+      }).timeout(const Duration(seconds: 20));
+      responseJson = returnResponse(response);
+    } on SocketException {
       throw FetchDataException("No internet connection", uri.toString());
-    }
-    on TimeoutException{
+    } on TimeoutException {
       APiNotRespondingException("Api not Responing", uri.toString());
     }
 
@@ -45,21 +39,20 @@ class NetworkApiServices extends BaseApiServices {
 
   @override
   Future loginApi(data, String url) async {
-
     dynamic responseJson;
     var uri = Uri.parse(url);
-    
-    try{
-      var response  = await http.post(
-        uri, 
-        body: data, 
-      ).timeout(const Duration(seconds: TIME_OUT_DURATION));
+
+    try {
+      var response = await http
+          .post(
+            uri,
+            body: data,
+          )
+          .timeout(const Duration(seconds: TIME_OUT_DURATION));
       responseJson = returnResponse(response);
-    } 
-    on SocketException{
+    } on SocketException {
       throw FetchDataException("No internet connection", uri.toString());
-    }
-    on TimeoutException{
+    } on TimeoutException {
       APiNotRespondingException("Api not Responing", uri.toString());
     }
     return responseJson;
@@ -67,26 +60,23 @@ class NetworkApiServices extends BaseApiServices {
 
   @override
   Future postApi(data, String url) async {
-
     dynamic responseJson;
     var uri = Uri.parse(url);
-    
-    try{
+
+    try {
       var token = '';
-      var response  = await http.post(
-        uri, 
+      var response = await http.post(
+        uri,
         body: data,
         headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer $token',
-            },
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       ).timeout(const Duration(seconds: TIME_OUT_DURATION));
       responseJson = returnResponse(response);
-    } 
-    on SocketException{
+    } on SocketException {
       throw FetchDataException("No internet connection", uri.toString());
-    }
-    on TimeoutException{
+    } on TimeoutException {
       APiNotRespondingException("Api not Responing", uri.toString());
     }
     return responseJson;
@@ -96,44 +86,45 @@ class NetworkApiServices extends BaseApiServices {
   Future postApiWithRawData(data, String url) async {
     dynamic responseJson;
     var uri = Uri.parse(url);
-    
-    try{
-      var response  = await http.post(
-        uri, 
-        body: json.encode(data), 
-      ).timeout(const Duration(seconds: TIME_OUT_DURATION));
+
+    try {
+      var token = await UserPrefernce().getAccessToken();
+      var response = await http.post(uri, body: json.encode(data), headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      }).timeout(const Duration(seconds: TIME_OUT_DURATION));
       responseJson = returnResponse(response);
-    } 
-    on SocketException{
+    } on SocketException {
       throw FetchDataException("No internet connection", uri.toString());
-    }
-    on TimeoutException{
+    } on TimeoutException {
       APiNotRespondingException("Api not Responing", uri.toString());
     }
     return responseJson;
   }
-  
+
   returnResponse(http.Response response) {
     if (kDebugMode) {
       print(response.body);
     }
     switch (response.statusCode) {
-
       case 200:
         var responseJson = json.decode(response.body);
         return responseJson;
-        
+
       case 400:
-        throw BadRequestException(json.decode(response.body), response.request!.url.toString());
-      
+        throw BadRequestException(
+            json.decode(response.body), response.request!.url.toString());
+
       case 401:
       case 403:
-        throw UnAuthorizedException(json.decode(response.body), response.request!.url.toString());
-      
+        throw UnAuthorizedException(
+            json.decode(response.body), response.request!.url.toString());
+
       case 500:
-        throw FetchDataException('Error occured with status code : ${response.statusCode}', response.request!.url.toString());
+        throw FetchDataException(
+            'Error occured with status code : ${response.statusCode}',
+            response.request!.url.toString());
       default:
     }
   }
-
 }

@@ -1,4 +1,8 @@
 import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
+import 'package:aladin_ecommerce/view_model/auth/user_preference.dart';
+import 'package:aladin_ecommerce/views/cart_screen.dart';
+import 'package:aladin_ecommerce/views/login_screen.dart';
+import 'package:aladin_ecommerce/views/oder_screen.dart';
 import 'package:aladin_ecommerce/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -75,12 +79,21 @@ class Navbar extends StatelessWidget {
               Navigator.pop(context);
             }
           ),
+          NavBarWidget(
+            title: "Cart", 
+            icon: Icons.shopping_cart_outlined, 
+            onPress: (){
+              Navigator.pop(context);
+              Get.to(const CartScreen());
+            }
+          ),
 
           NavBarWidget(
             title: "Orders", 
             icon: Icons.list_alt_outlined, 
             onPress: (){
               Navigator.pop(context);
+              Get.to(()=>const OrderScreen());
             }
           ),
 
@@ -133,6 +146,8 @@ class Navbar extends StatelessWidget {
             icon: Icons.logout_outlined, 
             onPress: (){
               Navigator.pop(context);
+              UserPrefernce().removeUser();
+              Get.offAll(()=>const LoginScreen());
             }
           ),
           
