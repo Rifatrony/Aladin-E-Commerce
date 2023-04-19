@@ -29,6 +29,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final topInCategoriesViewModel = Get.put(TopInCategoriesViewModel());
   final categoryViewModel = Get.put(CategoryViewModel());
 
+
+  
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Container(
                       margin: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade200, shape: BoxShape.circle),
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.circle),
                       child: IconButton(
                           onPressed: () {},
                           icon: const Icon(
@@ -89,7 +94,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -106,64 +112,106 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
               ),
             ),
-            Obx( () =>
-              Container(
+            Obx(
+              () => Container(
                 height: Get.height * 0.25,
                 padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
-                child: categoryViewModel.loading.value 
-                ? const Center(child: CircularProgressIndicator())
-                : GridView.builder(
-                    itemCount: categoryViewModel.category.value.categories!.data!.length,
-                    scrollDirection: Axis.horizontal,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 80 / 90,
-                      crossAxisCount: 2,
-                    ),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Get.to(const CategoryWiseProductScreen());
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 60,
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14),
-                                color: Colors.grey.shade200,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(14),
-                                child: Image(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      categoryViewModel.category.value.categories!.data![index].image.toString()),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.01,
-                            ),
-                            Text(
-                              categoryViewModel.category.value.categories!.data![index].name.toString(),
-                              maxLines: 1,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black
-                              ),
-                            )
-                           
-                          ],
+                child: categoryViewModel.loading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : GridView.builder(
+                        itemCount: categoryViewModel
+                            .category.value.categories!.data!.length,
+                        scrollDirection: Axis.horizontal,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          childAspectRatio: 80 / 90,
+                          crossAxisCount: 2,
                         ),
-                      );
-                    }),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Get.to(const CategoryWiseProductScreen());
+                            },
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14),
+                                    color: Colors.grey.shade200,
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: Image(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(categoryViewModel
+                                          .category
+                                          .value
+                                          .categories!
+                                          .data![index]
+                                          .image
+                                          .toString()),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Get.height * 0.01,
+                                ),
+                                Text(
+                                  categoryViewModel.category.value.categories!
+                                      .data![index].name
+                                      .toString(),
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                      fontSize: 12, color: Colors.black),
+                                )
+                              ],
+                            ),
+                          );
+                        }),
               ),
             ),
+            // InkWell(
+            //   onTap: () {
+            //     Get.to(()=> const ManualOrderScreen());
+            //   },
+            //   child: Container(
+            //     margin:
+            //         const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            //     decoration: BoxDecoration(
+            //         color: Colors.grey.shade200,
+            //         borderRadius: BorderRadius.circular(16)),
+            //     child: Padding(
+            //       padding:
+            //           const EdgeInsets.symmetric(horizontal: 10, vertical: 16),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           TitleText(
+            //             title: "Order Manually",
+            //             fontSize: 16,
+            //             color: Colors.redAccent.shade400,
+            //           ),
+            //           TitleText(
+            //             title: "Chick here to write your order",
+            //             fontSize: 12,
+            //             color: Colors.redAccent.shade400,
+            //           ),
+            //           Icon(
+            //             Icons.edit_outlined,
+            //             color: Colors.redAccent.shade400,
+            //           )
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TitleText(
                 title: "Latest Product",
                 fontSize: 18,
@@ -183,13 +231,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(()=> ProductDetails(slug: latestViewModel.latestProduct.value
-                                                .products!.data![index].slug!
-                                                .toString(),
-                                                id: latestViewModel.latestProduct.value
-                                                .products!.data![index].id!
-                                                .toString()
-                                                ));
+                              Get.to(() => ProductDetails(
+                                  slug: latestViewModel.latestProduct.value
+                                      .products!.data![index].slug!
+                                      .toString(),
+                                  id: latestViewModel.latestProduct.value
+                                      .products!.data![index].id!
+                                      .toString()));
                             },
                             child: Wrap(
                               children: [
@@ -204,15 +252,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(16)),
+                                          borderRadius:
+                                              const BorderRadius.all(
+                                                  Radius.circular(16)),
                                           child: Image.network(
-                                            latestViewModel.latestProduct.value
-                                                .products!.data![index].thumbnail!
+                                            latestViewModel
+                                                .latestProduct
+                                                .value
+                                                .products!
+                                                .data![index]
+                                                .thumbnail!
                                                 .toString(),
                                             height: 10,
                                             width: double.infinity,
@@ -229,8 +283,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               height: 8,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 5),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5),
                                               child: Text(
                                                 latestViewModel
                                                     .latestProduct
@@ -239,20 +294,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     .data![index]
                                                     .name
                                                     .toString(),
-                                                
                                                 textAlign: TextAlign.start,
                                                 maxLines: 3,
                                                 style: const TextStyle(
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                             ),
                                             SizedBox(
                                               height: Get.height * 0.005,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -268,7 +324,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         .toString(),
                                                     textSize: 13.0,
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight:
+                                                        FontWeight.w500,
                                                   ),
                                                   AppText(
                                                     title: latestViewModel
@@ -279,10 +336,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         .discountedPrice
                                                         .toString(),
                                                     textSize: 13.0,
-                                                    color: Colors.grey.shade600,
-                                                    fontWeight: FontWeight.w500,
-                                                    textDecoration: TextDecoration
-                                                        .lineThrough,
+                                                    color:
+                                                        Colors.grey.shade600,
+                                                    fontWeight:
+                                                        FontWeight.w500,
+                                                    textDecoration:
+                                                        TextDecoration
+                                                            .lineThrough,
                                                   ),
                                                 ],
                                               ),
@@ -303,7 +363,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -337,13 +398,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(()=> ProductDetails(slug: topInCategoriesViewModel.topInCategoriesProduct.value
-                                                .products!.data![index].slug!
-                                                .toString(),
-                                                id: topInCategoriesViewModel.topInCategoriesProduct.value
-                                                .products!.data![index].id!
-                                                .toString()
-                                                ));
+                              Get.to(() => ProductDetails(
+                                  slug: topInCategoriesViewModel
+                                      .topInCategoriesProduct
+                                      .value
+                                      .products!
+                                      .data![index]
+                                      .slug!
+                                      .toString(),
+                                  id: topInCategoriesViewModel
+                                      .topInCategoriesProduct
+                                      .value
+                                      .products!
+                                      .data![index]
+                                      .id!
+                                      .toString()));
                             },
                             child: Wrap(
                               children: [
@@ -358,7 +427,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                     borderRadius: BorderRadius.circular(16),
                                   ),
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.start,
                                     children: [
                                       Expanded(
                                         child: Stack(
@@ -389,7 +459,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 width: 70,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
-                                                        BorderRadius.circular(10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                     color: Colors.green),
                                                 child: Center(
                                                   child: Text(
@@ -413,8 +484,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                               height: 8,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 5),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5),
                                               child: Text(
                                                 topInCategoriesViewModel
                                                     .topInCategoriesProduct
@@ -427,15 +499,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                 maxLines: 3,
                                                 style: const TextStyle(
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                             ),
                                             SizedBox(
                                               height: Get.height * 0.005,
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -451,7 +525,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         .toString(),
                                                     textSize: 13.0,
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w500,
+                                                    fontWeight:
+                                                        FontWeight.w500,
                                                   ),
                                                   AppText(
                                                     title: topInCategoriesViewModel
@@ -462,10 +537,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                         .price
                                                         .toString(),
                                                     textSize: 13.0,
-                                                    color: Colors.grey.shade600,
-                                                    fontWeight: FontWeight.w500,
-                                                    textDecoration: TextDecoration
-                                                        .lineThrough,
+                                                    color:
+                                                        Colors.grey.shade600,
+                                                    fontWeight:
+                                                        FontWeight.w500,
+                                                    textDecoration:
+                                                        TextDecoration
+                                                            .lineThrough,
                                                   ),
                                                 ],
                                               ),
@@ -486,14 +564,176 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: TitleText(
                 title: "Also ask for",
                 fontSize: 18,
                 color: Colors.redAccent.shade400,
               ),
             ),
-            const Product()
+            const Product(),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TitleText(
+                    title: "All Product",
+                    fontSize: 18,
+                    color: Colors.redAccent.shade400,
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20,
+                    color: Colors.redAccent.shade400,
+                  )
+                ],
+              ),
+            ),
+            Obx(
+              () => topInCategoriesViewModel.loading.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: GridView.builder(
+                          shrinkWrap: true,
+                          primary: false,
+                          itemCount: topInCategoriesViewModel
+                              .topInCategoriesProduct
+                              .value
+                              .products!
+                              .data!
+                              .length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
+                            mainAxisExtent: 280,
+                          ),
+                          itemBuilder: (_, index) {
+                            return InkWell(
+                              onTap: () {
+                                Get.to(() => ProductDetails(
+                                    slug: topInCategoriesViewModel
+                                        .topInCategoriesProduct
+                                        .value
+                                        .products!
+                                        .data![index]
+                                        .slug!
+                                        .toString(),
+                                    id: topInCategoriesViewModel
+                                        .topInCategoriesProduct
+                                        .value
+                                        .products!
+                                        .data![index]
+                                        .id!
+                                        .toString()));
+                              },
+                              child: Card(
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                color: Colors.grey.shade200,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(16)),
+                                        child: Image.network(
+                                          topInCategoriesViewModel
+                                              .topInCategoriesProduct
+                                              .value
+                                              .products!
+                                              .data![index]
+                                              .thumbnail!
+                                              .toString(),
+                                          height: 10,
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.015,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5),
+                                      child: Text(
+                                        topInCategoriesViewModel
+                                            .topInCategoriesProduct
+                                            .value
+                                            .products!
+                                            .data![index]
+                                            .name
+                                            .toString(),
+                                        textAlign: TextAlign.start,
+                                        maxLines: 3,
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.01,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          AppText(
+                                            title: topInCategoriesViewModel
+                                                .topInCategoriesProduct
+                                                .value
+                                                .products!
+                                                .data![index]
+                                                .discountedPrice
+                                                .toString(),
+                                            textSize: 13.0,
+                                            color: Colors.black87,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          AppText(
+                                            title: topInCategoriesViewModel
+                                                .topInCategoriesProduct
+                                                .value
+                                                .products!
+                                                .data![index]
+                                                .discountedPrice
+                                                .toString(),
+                                            textSize: 13.0,
+                                            color: Colors.grey.shade600,
+                                            fontWeight: FontWeight.w500,
+                                            textDecoration:
+                                                TextDecoration.lineThrough,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.015,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
+            ),
           ],
         ),
       ),

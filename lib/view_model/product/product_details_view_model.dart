@@ -7,12 +7,25 @@ class ProductDetailsViewModel extends GetxController{
   final repository = ProductDetailsRepository();
   final loading  = false.obs;
   final product = ProductDetailsModel().obs;
+  final quantity = 1.obs;
 
   void setLoading(bool value){
     loading.value = value;
   }
   void setData(ProductDetailsModel value){
     product.value = value;
+  }
+
+  void increment(){
+    quantity.value ++ ;
+  }
+  void decrement(){
+    if(quantity.value>1){
+      quantity.value -- ;
+    }
+    else{
+      Utils.snackBar("Error", "Quantity can't be less then 1");
+    }
   }
 
   Future<void> getProductDetails(String url) async {

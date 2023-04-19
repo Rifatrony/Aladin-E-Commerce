@@ -138,7 +138,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 "options": {"size": "s", "length": "m"}
                               };
                               cartViewModel.addToCart(data,
-                                  "${AppUrl.productDetailsUrl}/${widget.id}");
+                                  "${AppUrl.addToCartUrl}/${widget.id}");
+
                             },
                             title: "Add to cart"),
                       )

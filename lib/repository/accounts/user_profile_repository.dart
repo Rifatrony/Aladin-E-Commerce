@@ -8,4 +8,9 @@ class Profilerepository {
     dynamic response = await apiService.getApi(AppUrl.profileUrl);
     return ProfileModel.fromJson(response);
   }
+
+  Future updateUserProfile(dynamic data) async{
+    dynamic response = await apiService.postApi(data, AppUrl.updateProfileUrl);
+    return response;
+  }
 }

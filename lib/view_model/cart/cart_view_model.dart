@@ -21,16 +21,28 @@ class CartViewModel extends GetxController {
     cart.value = value;
   }
 
-  void incrementItemQuantity(int index) {
-    cart.update((val) {
-      val!.data![index].quantity = val.data![index].quantity! + 1;
-      val.data![index].total =
-          double.parse(val.data![index].price!) * val.data![index].quantity!;
-    });
+  Future<void> incrementItemQuantity(int index, String url) async {
+    try {
+      repository.incrementCart(url).then((val) {
+        cart.update((val) {
+          val!.data![index].quantity = val.data![index].quantity! + 1;
+          val.data![index].total =
+              double.parse(val.data![index].price!) * val.data![index].quantity!;
+        });
+      }).onError((error, stackTrace) {
+        Utils.snackBar("Error", error.toString());
+      });
+    } catch (error) {
+      Utils.snackBar("Error", error.toString());
+    }
   }
 
-  void decrementItemQuantity(int index) {
-    cart.update((val) {
+  Future<void> decrementItemQuantity(int index,  String url) async {
+
+
+    try {
+      repository.decrementCart(url).then((val) {
+        cart.update((val) {
       if (val!.data![index].quantity! > 1) {
         val.data![index].quantity = val.data![index].quantity! - 1;
         val.data![index].total =
@@ -39,17 +51,29 @@ class CartViewModel extends GetxController {
         Utils.snackBar("Error", "Quantity cannot be less than 1.");
       }
     });
+      }).onError((error, stackTrace) {
+        Utils.snackBar("Error", error.toString());
+      });
+    } catch (error) {
+      Utils.snackBar("Error", error.toString());
+    }
+
+
+
+    
   }
 
   double getCartTotal() {
-  double total = 0.0;
-  if (cart.value.data != null) { // check if cart.value.data is not null
-    for (Datum item in cart.value.data!) {
-      total += item.total ?? 0.0; // use null-aware operators to avoid null errors
+    double total = 0.0;
+    if (cart.value.data != null) {
+      // check if cart.value.data is not null
+      for (Datum item in cart.value.data!) {
+        total +=
+            item.total ?? 0.0; // use null-aware operators to avoid null errors
+      }
     }
+    return total;
   }
-  return total;
-}
 
   @override
   void onInit() {

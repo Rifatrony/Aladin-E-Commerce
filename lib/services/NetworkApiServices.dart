@@ -38,6 +38,30 @@ class NetworkApiServices extends BaseApiServices {
   }
 
   @override
+  Future getApiWithoutHeader(String url) async {
+    dynamic responseJson;
+
+    var uri = Uri.parse(url);
+
+    try {
+      
+      final response = await http.get(
+        uri,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      ).timeout(const Duration(seconds: 20));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException("No internet connection", uri.toString());
+    } on TimeoutException {
+      APiNotRespondingException("Api not Responing", uri.toString());
+    }
+
+    return responseJson;
+  }
+
+  @override
   Future loginApi(data, String url) async {
     dynamic responseJson;
     var uri = Uri.parse(url);
@@ -69,7 +93,6 @@ class NetworkApiServices extends BaseApiServices {
         uri,
         body: data,
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
       ).timeout(const Duration(seconds: TIME_OUT_DURATION));
