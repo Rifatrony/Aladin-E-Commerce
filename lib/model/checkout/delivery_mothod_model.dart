@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final deliveryMethodModel = deliveryMethodModelFromJson(jsonString);
-
 import 'dart:convert';
 
 List<DeliveryMethodModel> deliveryMethodModelFromJson(String str) => List<DeliveryMethodModel>.from(json.decode(str).map((x) => DeliveryMethodModel.fromJson(x)));

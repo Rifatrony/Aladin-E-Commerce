@@ -102,8 +102,11 @@ class _CartScreenState extends State<CartScreen> {
                                       IconButton(
                                         icon: const Icon(Icons.remove),
                                         onPressed: () {
-                                          controller
+                                          if(controller.cart.value.data![index].quantity! > 1){
+                                            controller
                                               .decrementItemQuantity(index, "${AppUrl.incrementCartUrl}/${controller.cart.value.data![index].product!.id}/decrement");
+
+                                          }
                                         
                                         },
                                       ),

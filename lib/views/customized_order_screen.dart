@@ -1,0 +1,69 @@
+import 'package:aladin_ecommerce/widgets/app_button.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class CustomizedOrderScreen extends StatefulWidget {
+  const CustomizedOrderScreen({super.key});
+
+  @override
+  State<CustomizedOrderScreen> createState() => _CustomizedOrderScreenState();
+}
+
+class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Customized Your Order"),
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 10),
+          child: Column(
+            children: [
+              SizedBox(
+                height: Get.height * 0.2,
+              ),
+              Text(
+                "You can order by write your products details or given order images",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.redAccent.shade400,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.text,
+                  maxLines: 5,
+                  decoration: InputDecoration(
+                      hintText: "",
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(16))),
+                ),
+              ),
+              SizedBox(
+                height: Get.height * 0.02,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: AppButton(
+                  onPress: () {},
+                  title: "Submit",
+                  height: 55,
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

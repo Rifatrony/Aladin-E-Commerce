@@ -81,25 +81,35 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
 
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Image(
                                 height: 50,
-                                width: 80,
+                                width: 50,
                                 image: NetworkImage(productDetails
                                     .product.value.brand!.image
                                     .toString())),
                           ),
                           SizedBox(width: Get.width * 0.02),
-                          const Text("Category: "),
-                          SizedBox(width: Get.width * 0.02),
-                           Text(
-                            productDetails.product.value.category!.name.toString(),
-                            style: const TextStyle(
+                          const Text(
+                            "Category:",
+                            style: TextStyle(
                                 fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                                fontSize: 13,
                                 color: Colors.black),
+                          ),
+                          SizedBox(width: Get.width * 0.02),
+                          Expanded(
+                            child: Text(
+                              productDetails.product.value.category!.name
+                                  .toString(),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 12,
+                                  color: Colors.black),
+                            ),
                           ),
                         ],
                       ),
@@ -111,18 +121,28 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            
-                            Text("${productDetails.product.value.finalPrice} ৳", style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                            ),),
                             Text(
-                                "${"${productDetails.product.value.price} ৳"} (${productDetails.product.value.discount} % OFF)", style: TextStyle(
-                                  decoration: TextDecoration.lineThrough,
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16
-                                ),),
+                              "${productDetails.product.value.finalPrice} ৳",
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 16),
+                            ),
+                            productDetails.product.value.discount == null
+                                ? Text(
+                                    "${"${productDetails.product.value.price} ৳"} (0 % OFF)",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        color: Colors.grey.shade500,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  )
+                                : Text(
+                                    "${"${productDetails.product.value.price} ৳"} (${productDetails.product.value.discount} % OFF)",
+                                    style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        color: Colors.grey.shade500,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
                           ],
                         ),
                       ),
@@ -137,9 +157,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 "quantity": "1",
                                 "options": {"size": "s", "length": "m"}
                               };
-                              cartViewModel.addToCart(data,
-                                  "${AppUrl.addToCartUrl}/${widget.id}");
-
+                              cartViewModel.addToCart(
+                                  data, "${AppUrl.addToCartUrl}/${widget.id}");
                             },
                             title: "Add to cart"),
                       )

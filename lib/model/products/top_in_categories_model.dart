@@ -62,7 +62,7 @@ class Datum {
     String? thumbnail;
     String? discount;
     String? price;
-    double? discountedPrice;
+    dynamic discountedPrice;
     bool? hasAttribute;
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -72,7 +72,7 @@ class Datum {
         thumbnail: json["thumbnail"],
         discount: json["discount"],
         price: json["price"],
-        discountedPrice: json["discounted_price"]?.toDouble(),
+        discountedPrice: json["discounted_price"],
         hasAttribute: json["has_attribute"],
     );
 

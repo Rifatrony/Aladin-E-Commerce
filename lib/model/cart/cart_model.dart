@@ -34,13 +34,13 @@ class Datum {
 
     int? quantity;
     String? price;
-    double? total;
+    int? total;
     Product? product;
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         quantity: json["quantity"],
         price: json["price"],
-        total: json["total"]?.toDouble(),
+        total: json["total"],
         product: json["product"] == null ? null : Product.fromJson(json["product"]),
     );
 
@@ -70,7 +70,7 @@ class Product {
     String? thumbnail;
     String? discount;
     String? price;
-    double? discountedPrice;
+    String? discountedPrice;
     bool? hasAttribute;
 
     factory Product.fromJson(Map<String, dynamic> json) => Product(
@@ -80,7 +80,7 @@ class Product {
         thumbnail: json["thumbnail"],
         discount: json["discount"],
         price: json["price"],
-        discountedPrice: json["discounted_price"]?.toDouble(),
+        discountedPrice: json["discounted_price"],
         hasAttribute: json["has_attribute"],
     );
 

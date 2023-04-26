@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final productDetailsModel = productDetailsModelFromJson(jsonString);
+
 import 'dart:convert';
 
 ProductDetailsModel productDetailsModelFromJson(String str) => ProductDetailsModel.fromJson(json.decode(str));
@@ -30,18 +34,18 @@ class ProductDetailsModel {
     String? name;
     String? slug;
     String? description;
-    String? sku;
+    dynamic sku;
     String? price;
     String? discount;
     String? discountType;
-    double? finalPrice;
+    String? finalPrice;
     String? thumbnail;
     String? image1;
     String? image2;
     String? image3;
     Category? category;
     Brand? brand;
-    List<Tag>? tag;
+    List<dynamic>? tag;
     bool? hasAttribute;
     List<dynamic>? attributes;
 
@@ -54,14 +58,14 @@ class ProductDetailsModel {
         price: json["price"],
         discount: json["discount"],
         discountType: json["discount_type"],
-        finalPrice: json["final_price"]?.toDouble(),
+        finalPrice: json["final_price"],
         thumbnail: json["thumbnail"],
         image1: json["image1"],
         image2: json["image2"],
         image3: json["image3"],
         category: json["category"] == null ? null : Category.fromJson(json["category"]),
         brand: json["brand"] == null ? null : Brand.fromJson(json["brand"]),
-        tag: json["tag"] == null ? [] : List<Tag>.from(json["tag"]!.map((x) => Tag.fromJson(x))),
+        tag: json["tag"] == null ? [] : List<dynamic>.from(json["tag"]!.map((x) => x)),
         hasAttribute: json["hasAttribute"],
         attributes: json["attributes"] == null ? [] : List<dynamic>.from(json["attributes"]!.map((x) => x)),
     );
@@ -82,7 +86,7 @@ class ProductDetailsModel {
         "image3": image3,
         "category": category?.toJson(),
         "brand": brand?.toJson(),
-        "tag": tag == null ? [] : List<dynamic>.from(tag!.map((x) => x.toJson())),
+        "tag": tag == null ? [] : List<dynamic>.from(tag!.map((x) => x)),
         "hasAttribute": hasAttribute,
         "attributes": attributes == null ? [] : List<dynamic>.from(attributes!.map((x) => x)),
     };
@@ -145,25 +149,5 @@ class Category {
         "icon": icon,
         "image": image,
         "description": description,
-    };
-}
-
-class Tag {
-    Tag({
-        this.name,
-        this.slug,
-    });
-
-    String? name;
-    String? slug;
-
-    factory Tag.fromJson(Map<String, dynamic> json) => Tag(
-        name: json["name"],
-        slug: json["slug"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "name": name,
-        "slug": slug,
     };
 }

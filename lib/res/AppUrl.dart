@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 class AppUrl {
-  static const String baseUrl = 'https://faruqtraders.com/api/v1';
+  static const String baseUrl = 'https://aladinbdonline.com/api/v1';
   static const String loginUrl = '$baseUrl/auth/user/login';
 
   static const String profileUrl = '$baseUrl/user/profile';
@@ -14,6 +14,7 @@ class AppUrl {
   static const String topInCategoriesUrl = '$baseUrl/product/products';
 
   static const String categoryUrl = '$baseUrl/category/index';
+  static const String categoryWiseProductUrl = '$baseUrl/product/products?category=';
   static const String productDetailsUrl = '$baseUrl/product/details';
 
   static const String addToCartUrl = '$baseUrl/carts/add';
@@ -25,5 +26,4 @@ class AppUrl {
   static const String orderDetailsUrl = '$baseUrl/user/order/details';
 
   static const String deliveryMethodUrl = '$baseUrl/checkout/delivery/methods';
-
 }

@@ -87,38 +87,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   SizedBox(
                                     height: Get.height * 0.003,
                                   ),
-                                  profileViewModel
-                                          .user.value.user!.email!.isNotEmpty
-                                      ? Text(
+                                  profileViewModel.user.value.user!.email ==
+                                          null
+                                      ? const Text(
+                                          "Update your email",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12),
+                                        )
+                                      : Text(
                                           profileViewModel
                                               .user.value.user!.email
                                               .toString(),
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12),
-                                        )
-                                      : const Text(
-                                          "Update your email",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12),
                                         ),
                                   SizedBox(
                                     height: Get.height * 0.005,
                                   ),
-                                  profileViewModel
-                                          .user.value.user!.address!.isNotEmpty
-                                      ? Text(
+                                  profileViewModel.user.value.user!.address ==
+                                          null
+                                      ? const Text(
+                                          "Update your Address",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 11),
+                                        )
+                                      : Text(
                                           profileViewModel
                                               .user.value.user!.address
                                               .toString(),
                                           style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 11),
-                                        )
-                                      : const Text(
-                                          "Update your Address",
-                                          style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 11),
                                         )
@@ -246,7 +246,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         onPressed: () {
                                                           Get.back();
                                                         },
-                                                        child: const Text("Cancel")),
+                                                        child: const Text(
+                                                            "Cancel")),
                                                     TextButton(
                                                         onPressed: () {
                                                           if (profileViewModel
@@ -304,7 +305,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             Get.back();
                                                           }
                                                         },
-                                                        child: const Text("Update")),
+                                                        child: const Text(
+                                                            "Update")),
                                                   ],
                                                 )
                                               ],

@@ -1,21 +1,21 @@
 // To parse this JSON data, do
 //
-//     final bestSellingModel = bestSellingModelFromJson(jsonString);
+//     final categoryWiseModel = categoryWiseModelFromJson(jsonString);
 
 import 'dart:convert';
 
-BestSellingModel bestSellingModelFromJson(String str) => BestSellingModel.fromJson(json.decode(str));
+CategoryWiseModel categoryWiseModelFromJson(String str) => CategoryWiseModel.fromJson(json.decode(str));
 
-String bestSellingModelToJson(BestSellingModel data) => json.encode(data.toJson());
+String categoryWiseModelToJson(CategoryWiseModel data) => json.encode(data.toJson());
 
-class BestSellingModel {
-    BestSellingModel({
+class CategoryWiseModel {
+    CategoryWiseModel({
         this.products,
     });
 
     Products? products;
 
-    factory BestSellingModel.fromJson(Map<String, dynamic> json) => BestSellingModel(
+    factory CategoryWiseModel.fromJson(Map<String, dynamic> json) => CategoryWiseModel(
         products: json["products"] == null ? null : Products.fromJson(json["products"]),
     );
 
@@ -62,7 +62,7 @@ class Datum {
     String? thumbnail;
     String? discount;
     String? price;
-    double? discountedPrice;
+    String? discountedPrice;
     bool? hasAttribute;
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -72,7 +72,7 @@ class Datum {
         thumbnail: json["thumbnail"],
         discount: json["discount"],
         price: json["price"],
-        discountedPrice: json["discounted_price"]?.toDouble(),
+        discountedPrice: json["discounted_price"],
         hasAttribute: json["has_attribute"],
     );
 

@@ -26,41 +26,40 @@ class CartViewModel extends GetxController {
       repository.incrementCart(url).then((val) {
         cart.update((val) {
           val!.data![index].quantity = val.data![index].quantity! + 1;
-          val.data![index].total =
-              double.parse(val.data![index].price!) * val.data![index].quantity!;
+          val.data![index].total = (double.parse(val.data![index].price!) *
+                  val.data![index].quantity!)
+              .toInt();
         });
       }).onError((error, stackTrace) {
         Utils.snackBar("Error", error.toString());
+        print(error.toString());
       });
     } catch (error) {
       Utils.snackBar("Error", error.toString());
     }
   }
 
-  Future<void> decrementItemQuantity(int index,  String url) async {
-
-
+  Future<void> decrementItemQuantity(int index, String url) async {
     try {
       repository.decrementCart(url).then((val) {
         cart.update((val) {
-      if (val!.data![index].quantity! > 1) {
-        val.data![index].quantity = val.data![index].quantity! - 1;
-        val.data![index].total =
-            double.parse(val.data![index].price!) * val.data![index].quantity!;
-      } else {
-        Utils.snackBar("Error", "Quantity cannot be less than 1.");
-      }
-    });
+          if (val!.data![index].quantity! > 1) {
+            val.data![index].quantity = val.data![index].quantity! - 1;
+            val.data![index].total = (double.parse(val.data![index].price!) *
+                    val.data![index].quantity!)
+                .toInt();
+          } else {
+            Utils.snackBar("Error", "Quantity cannot be less than 1.");
+          }
+        });
+
+        
       }).onError((error, stackTrace) {
         Utils.snackBar("Error", error.toString());
       });
     } catch (error) {
       Utils.snackBar("Error", error.toString());
     }
-
-
-
-    
   }
 
   double getCartTotal() {

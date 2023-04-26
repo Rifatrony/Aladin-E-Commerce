@@ -15,7 +15,7 @@ class AppButton extends StatelessWidget {
     this.loading = false,
     this.color = Colors.blue,
     this.fontSize = 16,
-    this.height = 16,
+    this.height = 45,
   });
 
   @override
@@ -23,11 +23,14 @@ class AppButton extends StatelessWidget {
     return InkWell(
       onTap: onPress,
       child: Container(
-        height: 45,
+        height: height,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16), color: color),
         child: loading
-            ? const Center(child: CircularProgressIndicator(color: Colors.white,))
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: Colors.white,
+              ))
             : Center(
                 child: Text(
                   title,

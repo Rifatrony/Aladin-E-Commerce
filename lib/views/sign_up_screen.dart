@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 text: const TextSpan(
                   text: 'Already have account? ',
                   style: TextStyle(
-                    color: Colors.black, fontSize: 16
+                    color: Color.fromARGB(255, 46, 16, 16), fontSize: 16
                   ),
                   children: [
                     TextSpan(
