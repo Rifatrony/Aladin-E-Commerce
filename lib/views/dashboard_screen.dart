@@ -1,4 +1,5 @@
 import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
+import 'package:aladin_ecommerce/view_model/banner/banner_view_model.dart';
 import 'package:aladin_ecommerce/view_model/category/category_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/feature_product_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/latest_view_model.dart';
@@ -9,6 +10,7 @@ import 'package:aladin_ecommerce/views/navbar.dart';
 import 'package:aladin_ecommerce/views/product_details_screen.dart';
 import 'package:aladin_ecommerce/widgets/app_text.dart';
 import 'package:aladin_ecommerce/widgets/title_text.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +27,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final latestViewModel = Get.put(LatestViewModel());
   final topInCategoriesViewModel = Get.put(TopInCategoriesViewModel());
   final categoryViewModel = Get.put(CategoryViewModel());
+  final bannerViewModel = Get.put(BannerViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -72,18 +75,57 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
             ),
-            Container(
-              height: 150,
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16), color: Colors.red),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: const Image(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                        "https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg")),
-              ),
+            Obx(
+              () => bannerViewModel.loading.value
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Column(
+                      children: [
+                        CarouselSlider.builder(
+                          itemCount:
+                              bannerViewModel.banners.value.data?.length ?? 0,
+                          itemBuilder:
+                              (BuildContext context, int index, int realIndex) {
+                            final banner =
+                                bannerViewModel.banners.value.data![index];
+                            return SizedBox(
+                              width: double.infinity,
+                              height:
+                                  200.0, // Set the height of the container to control the size of the image
+                              child: Image(
+                                fit: BoxFit.cover,
+                                  image: NetworkImage(banner.image.toString())),
+                            );
+                          },
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            aspectRatio: 16 / 9,
+                            viewportFraction: 1.0,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(
+                            bannerViewModel.banners.value.data?.length ?? 0,
+                            (index) => Container(
+                              width: 8.0,
+                              height: 8.0,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color:
+                                    bannerViewModel.currentBanner.value == index
+                                        ? Colors.white
+                                        : Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),

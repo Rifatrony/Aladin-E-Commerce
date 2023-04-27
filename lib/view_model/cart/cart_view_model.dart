@@ -32,7 +32,6 @@ class CartViewModel extends GetxController {
         });
       }).onError((error, stackTrace) {
         Utils.snackBar("Error", error.toString());
-        print(error.toString());
       });
     } catch (error) {
       Utils.snackBar("Error", error.toString());

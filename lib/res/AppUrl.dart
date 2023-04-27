@@ -4,6 +4,8 @@ class AppUrl {
   static const String baseUrl = 'https://aladinbdonline.com/api/v1';
   static const String loginUrl = '$baseUrl/auth/user/login';
 
+  static const String bannerUrl = '$baseUrl/banners';
+
   static const String profileUrl = '$baseUrl/user/profile';
   static const String updateProfileUrl = '$baseUrl/user/profile/update';
 
