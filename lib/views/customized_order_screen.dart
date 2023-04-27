@@ -1,3 +1,4 @@
+import 'package:aladin_ecommerce/views/custom_order_proceed.dart';
 import 'package:aladin_ecommerce/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,9 @@ class CustomizedOrderScreen extends StatefulWidget {
 }
 
 class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
+
+  final productController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,10 +43,12 @@ class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: productController,
                   keyboardType: TextInputType.text,
                   maxLines: 5,
                   decoration: InputDecoration(
-                      hintText: "",
+                      hintText: "Write product description",
+                      labelText: "Write product description",
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16)),
                       enabledBorder: OutlineInputBorder(
@@ -55,7 +61,9 @@ class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AppButton(
-                  onPress: () {},
+                  onPress: () {
+                    Get.to(()=> CustomOrderProceedScreen(product: productController.text.toString().trim()));
+                  },
                   title: "Submit",
                   height: 55,
                 ),

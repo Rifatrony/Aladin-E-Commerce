@@ -10,7 +10,7 @@ class AppText extends StatelessWidget {
     super.key,
     required this.title,
     this.textSize = 14,
-    this.color = Colors.white,
+    this.color = Colors.black,
     this.fontWeight = FontWeight.normal,
     this.textDecoration = TextDecoration.none,
   });

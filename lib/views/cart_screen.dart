@@ -1,5 +1,6 @@
 import 'package:aladin_ecommerce/res/AppUrl.dart';
 import 'package:aladin_ecommerce/view_model/cart/cart_view_model.dart';
+import 'package:aladin_ecommerce/views/order_proceed.dart';
 import 'package:aladin_ecommerce/widgets/app_button.dart';
 import 'package:aladin_ecommerce/widgets/app_text.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +170,7 @@ class _CartScreenState extends State<CartScreen> {
                             horizontal: 20, vertical: 8),
                         child: AppButton(
                           onPress: () {
-                            
+                            Get.to(const OrderProceedScreen());
                           },
                           title: "Checkout",
                           color: Colors.greenAccent.shade400,

@@ -25,6 +25,7 @@ class AppUrl {
   static const String decrementCartUrl = '$baseUrl/carts';
 
   static const String orderUrl = '$baseUrl/user/orders';
+  static const String customOrderUrl = '$baseUrl/checkout/custom-order';
   static const String orderDetailsUrl = '$baseUrl/user/order/details';
 
   static const String deliveryMethodUrl = '$baseUrl/checkout/delivery/methods';

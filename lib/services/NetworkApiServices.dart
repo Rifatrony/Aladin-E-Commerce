@@ -88,7 +88,7 @@ class NetworkApiServices extends BaseApiServices {
     var uri = Uri.parse(url);
 
     try {
-      var token = '';
+      var token = await UserPrefernce().getAccessToken();
       var response = await http.post(
         uri,
         body: data,
