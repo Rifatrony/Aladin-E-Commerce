@@ -27,6 +27,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Order Details"),
+        backgroundColor: Colors.deepOrangeAccent,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(

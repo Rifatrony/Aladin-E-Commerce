@@ -28,6 +28,8 @@ class _CategoryWiseProductScreenState extends State<CategoryWiseProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepOrangeAccent,
+        elevation: 0,
         title: Text(widget.category),
       ),
       body: Obx(() => categoryViewModel.categoryLoading.value

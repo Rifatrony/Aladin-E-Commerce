@@ -24,8 +24,9 @@ class _CustomOrderProceedScreenState extends State<CustomOrderProceedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Place Order"),
+        backgroundColor: Colors.deepOrangeAccent,
         elevation: 0,
+        title: const Text("Place Order"),
       ),
       body: Obx(
         () => profileViewModel.loading.value

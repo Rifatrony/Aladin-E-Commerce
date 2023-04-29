@@ -26,6 +26,10 @@ class AppUrl {
 
   static const String orderUrl = '$baseUrl/user/orders';
   static const String customOrderUrl = '$baseUrl/checkout/custom-order';
+  static const String customOrderListUrl = '$baseUrl/checkout/custom-order-list';
+  static const String customOrderDetailsUrl = '$baseUrl/checkout/custom-order-details';
+
+
   static const String orderDetailsUrl = '$baseUrl/user/order/details';
 
   static const String deliveryMethodUrl = '$baseUrl/checkout/delivery/methods';

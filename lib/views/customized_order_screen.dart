@@ -19,6 +19,7 @@ class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Customized Your Order"),
+        backgroundColor: Colors.deepOrangeAccent,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -65,7 +66,8 @@ class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
                     Get.to(()=> CustomOrderProceedScreen(product: productController.text.toString().trim()));
                   },
                   title: "Submit",
-                  height: 55,
+                  height: 50,
+                  color: Colors.deepOrangeAccent,
                 ),
               )
             ],

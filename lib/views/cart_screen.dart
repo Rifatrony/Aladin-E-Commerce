@@ -20,6 +20,8 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepOrangeAccent,
+        elevation: 0,
         title: const Text("My Cart"),
       ),
       body: Obx(() => controller.cartLoading.value

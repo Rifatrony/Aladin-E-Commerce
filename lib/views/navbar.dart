@@ -2,7 +2,7 @@ import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
 import 'package:aladin_ecommerce/view_model/auth/user_preference.dart';
 import 'package:aladin_ecommerce/views/cart_screen.dart';
 import 'package:aladin_ecommerce/views/login_screen.dart';
-import 'package:aladin_ecommerce/views/oder_screen.dart';
+import 'package:aladin_ecommerce/views/order.dart';
 import 'package:aladin_ecommerce/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,35 +50,15 @@ class Navbar extends StatelessWidget {
                   ),
                 ),
                 decoration: const BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.white,
                   image: DecorationImage(
                     // Cover Image
-                    image: NetworkImage(
-                      'https://matrixschools.edu.my/wp-content/uploads/DSC_6422-1024x681.jpg'
-                    ),
-                    fit: BoxFit.cover,
+                    image: AssetImage("assets/aladin.png"),
                   ),
                 ),
               ),
           ),
 
-        
-
-          NavBarWidget(
-            title: "Vouchers & Offers", 
-            icon: Icons.featured_play_list_outlined, 
-            onPress: (){
-              Navigator.pop(context);
-            }
-          ),
-
-          NavBarWidget(
-            title: "Favourite", 
-            icon: Icons.favorite_border_outlined, 
-            onPress: (){
-              Navigator.pop(context);
-            }
-          ),
           NavBarWidget(
             title: "Cart", 
             icon: Icons.shopping_cart_outlined, 
@@ -93,7 +73,7 @@ class Navbar extends StatelessWidget {
             icon: Icons.list_alt_outlined, 
             onPress: (){
               Navigator.pop(context);
-              Get.to(()=>const OrderScreen());
+              Get.to(()=>const OrderPage());
             }
           ),
 
@@ -106,41 +86,12 @@ class Navbar extends StatelessWidget {
             }
           ),
 
-          NavBarWidget(
-            title: "Addresses", 
-            icon: Icons.location_on_outlined, 
-            onPress: (){
-              Navigator.pop(context);
-            }
-          ),
 
-          NavBarWidget(
-            title: "Help Center", 
-            icon: Icons.help_center_outlined, 
-            onPress: (){
-              Navigator.pop(context);
-            }
-          ),
-          
+        
 
           const Divider(),
 
-          NavBarWidget(
-            title: "Settings", 
-            icon: Icons.settings_outlined, 
-            onPress: (){
-              Navigator.pop(context);
-            }
-          ),
-
-          NavBarWidget(
-            title: "Terms & Condition / Privacy", 
-            icon: Icons.verified_user_outlined, 
-            onPress: (){
-              Navigator.pop(context);
-            }
-          ),
-
+          
           NavBarWidget(
             title: "Logout", 
             icon: Icons.logout_outlined, 
