@@ -198,7 +198,7 @@ class _CustomOrderProceedScreenState extends State<CustomOrderProceedScreen> {
                             "product": widget.product
                           };
                           customOrderViewModel.createCustomOrder(data, AppUrl.customOrderUrl);
-                        }, title: "Place Order", height: 50, color: Colors.redAccent.shade400,)
+                        }, title: "Place Order", height: 50, color: Colors.deepOrangeAccent,)
                     ],
                   ),
                 ),

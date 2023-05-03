@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aladin_ecommerce">
+    package="com.binaryit.aladin_ecommerce">
    <application
-        android:label="Aladin Ecommerce"
+        android:label="AladinBD Online"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

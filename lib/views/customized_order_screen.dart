@@ -48,8 +48,8 @@ class _CustomizedOrderScreenState extends State<CustomizedOrderScreen> {
                   keyboardType: TextInputType.text,
                   maxLines: 5,
                   decoration: InputDecoration(
-                      hintText: "Write product description",
-                      labelText: "Write product description",
+                      hintText: "আপনার পছন্দ মত বাজার লিস্ট তৈরি করুন যেমনঃ আলু-৩কেজি, পিয়াজ-১কেজি",
+                      labelText: "আপনার পছন্দ মত বাজার লিস্ট তৈরি করুন যেমনঃ আলু-৩কেজি, পিয়াজ-১কেজি",
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16)),
                       enabledBorder: OutlineInputBorder(

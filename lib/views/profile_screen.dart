@@ -363,7 +363,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              Get.to(const OrderScreen());
+                              // Get.to(const OrderScreen());
                             },
                             child: Container(
                               margin: const EdgeInsets.only(left: 8, right: 20),
@@ -387,7 +387,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              Get.to(const OrderScreen());
+                              // Get.to(const OrderScreen());
                             },
                             child: Container(
                               margin: const EdgeInsets.only(left: 20, right: 8),

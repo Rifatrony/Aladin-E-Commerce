@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:aladin_ecommerce/views/dashboard_screen.dart';
+import 'package:aladin_ecommerce/views/home_screen.dart';
 import 'package:aladin_ecommerce/views/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (accessToken != null) {
       Timer(const Duration(seconds: 3), () {
-      Get.offAll(const DashboardScreen());
+      Get.offAll(const HomeScreen());
     });
     }
     else{
@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.white,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image(
               height: Get.height * 0.2,
               width: Get.height * 0.6,
-              image: const AssetImage("assets/commerce.png")
+              image: const AssetImage("assets/aladin.png")
             ),
 
             SizedBox(height: Get.height * 0.1),

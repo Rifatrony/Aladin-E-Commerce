@@ -1,4 +1,4 @@
-package com.example.aladin_ecommerce
+package com.binaryit.aladin_ecommerce
 
 import io.flutter.embedding.android.FlutterActivity
 

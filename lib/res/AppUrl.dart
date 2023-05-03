@@ -3,6 +3,7 @@
 class AppUrl {
   static const String baseUrl = 'https://aladinbdonline.com/api/v1';
   static const String loginUrl = '$baseUrl/auth/user/login';
+  static const String signUpUrl = '$baseUrl/auth/user/registration';
 
   static const String bannerUrl = '$baseUrl/banners';
 

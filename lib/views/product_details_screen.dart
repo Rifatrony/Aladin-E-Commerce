@@ -77,8 +77,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   color: Colors.deepOrange.shade400),
                             ),
                           ),
+                          
                         ],
                       ),
+                      SizedBox(height: Get.height * 0.01,),
+
+                      Text(productDetails.product.value.description.toString()),
 
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,

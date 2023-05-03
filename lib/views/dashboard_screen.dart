@@ -6,7 +6,6 @@ import 'package:aladin_ecommerce/view_model/product/latest_view_model.dart';
 import 'package:aladin_ecommerce/view_model/product/top_in_categories_view_model.dart';
 import 'package:aladin_ecommerce/views/category_wise_product_screen.dart';
 import 'package:aladin_ecommerce/views/customized_order_screen.dart';
-import 'package:aladin_ecommerce/views/navbar.dart';
 import 'package:aladin_ecommerce/views/product_details_screen.dart';
 import 'package:aladin_ecommerce/widgets/app_text.dart';
 import 'package:aladin_ecommerce/widgets/title_text.dart';
@@ -33,13 +32,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade50,
-      drawer: const Navbar(),
+      // drawer: const Navbar(),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.grey.shade50,
         iconTheme: const IconThemeData(color: Colors.black),
         title: const Text(
-          "Aladin E-Commerce",
+          "Aladin BD Online",
           style: TextStyle(color: Colors.black),
         ),
       ),

@@ -105,12 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         loginViewModel.loginApi(data);
                       }
                     },
-                    title: "Login"),
+                    title: "Login",
+                    color: Colors.deepOrangeAccent,
+                ),
               ),
               SizedBox(height: Get.height * 0.05),
               InkWell(
                 onTap: () {
-                  Get.to(() => const SignUpScreen());
+                  Get.offAll(() => const SignUpScreen());
                 },
                 child: RichText(
                   text: const TextSpan(
@@ -120,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextSpan(
                         text: 'Sign Up',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.blue),
+                            fontWeight: FontWeight.bold, color: Colors.deepOrangeAccent),
                       ),
                     ],
                   ),

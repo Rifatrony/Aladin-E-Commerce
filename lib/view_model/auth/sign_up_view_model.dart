@@ -1,53 +1,56 @@
 import 'package:aladin_ecommerce/model/auth/login_response_model.dart';
-import 'package:aladin_ecommerce/repository/auth/login_repository.dart';
+import 'package:aladin_ecommerce/repository/auth/sign_up_repository.dart';
 import 'package:aladin_ecommerce/utils/utils.dart';
 import 'package:aladin_ecommerce/view_model/auth/user_preference.dart';
 import 'package:aladin_ecommerce/views/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginViewModel extends GetxController {
-  final repository = LoginRepository();
+class SignUpViewModel extends GetxController {
+  final repository = SignUpRepository();
 
-  UserPrefernce userPrefernce = UserPrefernce();
 
+  final nameController = TextEditingController().obs;
+  final emailController = TextEditingController().obs;
   final phoneController = TextEditingController().obs;
   final passwordController = TextEditingController().obs;
 
+  final nameFocusNode = FocusNode().obs;
+  final emailFocusNode = FocusNode().obs;
   final phoneFocusNode = FocusNode().obs;
   final passwordFocusNode = FocusNode().obs;
 
+  UserPrefernce userPrefernce = UserPrefernce();
+
   RxBool loading = false.obs;
 
-  Future<void> loginApi(dynamic data) async {
+  Future<void> signUpApi(dynamic data) async {
 
     loading.value = true;
 
-    repository.loginApi(data).then((value) {
+    repository.signUpApi(data).then((value) {
       loading.value = false;
 
       if (value['message'] == "The given data was invalid.") {
         Utils.snackBar(
-          "Credential Don't Match.",
-          value['message'] + " Please check your Number & Password",
+          "The given data was invalid.",
+          "Error",
         );
-      } else {
+      } 
+      else {
         Utils.snackBar(
-          "Login Successful",
-          "Welcome back ☺️ ",
+          "Registration Successful",
+          "Thanks for create new account",
         );
-
         userPrefernce.saveUser(LoginResponseModel.fromJson(value)).then((value) {
           
         });
+          Get.offAll(const HomeScreen());
+          
+        }
 
-        Get.offAll(const HomeScreen());
-
-        
-      }
-    }).onError((error, stackTrace) {
-      loading.value = false;
-      Utils.snackBar("Error", error.toString());
     });
+
   }
+  
 }
