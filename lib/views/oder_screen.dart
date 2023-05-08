@@ -1,5 +1,5 @@
 import 'package:aladin_ecommerce/view_model/accounts/order_view_model.dart';
-import 'package:aladin_ecommerce/views/dashboard_screen.dart';
+import 'package:aladin_ecommerce/views/home_screen.dart';
 import 'package:aladin_ecommerce/views/order_details_screen.dart';
 import 'package:aladin_ecommerce/widgets/app_button.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +43,7 @@ class _OrderScreenState extends State<OrderScreen> {
                           const Text("No Order Found"),
                           SizedBox(height: Get.height * 0.05,),
                           AppButton(onPress: (){
-                            Get.offAll(const DashboardScreen());
+                            Get.offAll(const HomeScreen());
                           }, title: "Back to home", color: Colors.deepOrangeAccent, height: 50,),
                           SizedBox(height: Get.height * 0.01,),
                           Container(

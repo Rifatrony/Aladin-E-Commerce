@@ -2,7 +2,7 @@ import 'package:aladin_ecommerce/utils/utils.dart';
 import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
 import 'package:aladin_ecommerce/view_model/auth/user_preference.dart';
 import 'package:aladin_ecommerce/views/login_screen.dart';
-import 'package:aladin_ecommerce/views/oder_screen.dart';
+import 'package:aladin_ecommerce/views/order.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -125,210 +125,183 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ],
                               ),
                             ),
-                            Expanded(
-                                flex: 1,
-                                child: InkWell(
-                                  onTap: () {
-                                    Get.defaultDialog(
-                                        title: "Update Profile",
-                                        titlePadding:
-                                            const EdgeInsets.only(top: 20),
-                                        backgroundColor: Colors.grey.shade200,
-                                        titleStyle: const TextStyle(
-                                            color: Colors.black),
-                                        content: SingleChildScrollView(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Column(
-                                              children: [
-                                                // TextFormField(
-                                                //   initialValue: profileViewModel.user.value.user!.name,
-                                                //   decoration: InputDecoration(
-                                                //     focusedBorder: OutlineInputBorder(
-                                                //       borderRadius: BorderRadius.circular(16),
-                                                //     ),
-                                                //     enabledBorder: OutlineInputBorder(
-                                                //       borderRadius: BorderRadius.circular(16)
-                                                //     ),
-                                                //     labelText: "Name",
-                                                //     isDense: true
-                                                //   ),
-                                                // ),
-
-                                                SizedBox(
-                                                  height: Get.height * 0.015,
-                                                ),
-
-                                                TextFormField(
-                                                  controller: profileViewModel
-                                                      .phoneController.value,
-                                                  decoration: InputDecoration(
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16)),
-                                                      labelText: "Phone",
-                                                      isDense: true),
-                                                  // onFieldSubmitted: (value) {
-                                                  //   Utils.fieldFocusChange(context, profileViewModel.phoneFocusNode.value, profileViewModel.emailFocusNode.value);
-                                                  // },
-                                                ),
-
-                                                SizedBox(
-                                                  height: Get.height * 0.015,
-                                                ),
-
-                                                TextFormField(
-                                                  controller: profileViewModel
-                                                      .emailController.value,
-                                                  decoration: InputDecoration(
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16)),
-                                                      labelText: "Email",
-                                                      isDense: true),
-                                                  // onFieldSubmitted: (value) {
-                                                  //   Utils.fieldFocusChange(context, profileViewModel.emailFocusNode.value, profileViewModel.addressFocusNode.value);
-                                                  // },
-                                                ),
-
-                                                SizedBox(
-                                                  height: Get.height * 0.015,
-                                                ),
-
-                                                TextFormField(
-                                                  controller: profileViewModel
-                                                      .addressController.value,
-                                                  maxLines: 3,
-                                                  decoration: InputDecoration(
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16)),
-                                                      labelText: "Address",
-                                                      isDense: true),
-                                                ),
-
-                                                SizedBox(
-                                                  height: Get.height * 0.015,
-                                                ),
-
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    TextButton(
-                                                        onPressed: () {
-                                                          Get.back();
-                                                        },
-                                                        child: const Text(
-                                                            "Cancel")),
-                                                    TextButton(
-                                                        onPressed: () {
-                                                          if (profileViewModel
-                                                              .phoneController
-                                                              .value
-                                                              .text
-                                                              .isEmpty) {
-                                                            Utils.snackBar(
-                                                                "Number Required",
-                                                                "Enter Your Number");
-                                                          } else if (profileViewModel
-                                                              .emailController
-                                                              .value
-                                                              .text
-                                                              .isEmpty) {
-                                                            Utils.snackBar(
-                                                                "Email Required",
-                                                                "Enter Your Email");
-                                                          } else if (profileViewModel
-                                                              .addressController
-                                                              .value
-                                                              .text
-                                                              .isEmpty) {
-                                                            Utils.snackBar(
-                                                                "Address Required",
-                                                                "Enter Your Address");
-                                                          } else {
-                                                            Map data = {
-                                                              "name":
-                                                                  profileViewModel
-                                                                      .user
-                                                                      .value
-                                                                      .user!
-                                                                      .name,
-                                                              "email": profileViewModel
-                                                                  .emailController
-                                                                  .value
-                                                                  .text
-                                                                  .toString(),
-                                                              "phone": profileViewModel
-                                                                  .phoneController
-                                                                  .value
-                                                                  .text
-                                                                  .toString(),
-                                                              "address":
-                                                                  profileViewModel
-                                                                      .addressController
-                                                                      .value
-                                                                      .text
-                                                                      .toString(),
-                                                            };
-                                                            profileViewModel
-                                                                .updateProfile(
-                                                                    data);
-                                                            Get.back();
-                                                          }
-                                                        },
-                                                        child: const Text(
-                                                            "Update")),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ));
-                                  },
-                                  child: Column(
-                                    children: const [
-                                      Icon(
-                                        Icons.edit_outlined,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        "Update\nprofile",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 10, color: Colors.white),
-                                      ),
-                                    ],
-                                  ),
-                                ))
+                            // Expanded(
+                            //     flex: 1,
+                            //     child: InkWell(
+                            //       onTap: () {
+                            //         Get.defaultDialog(
+                            //             title: "Update Profile",
+                            //             titlePadding:
+                            //                 const EdgeInsets.only(top: 20),
+                            //             backgroundColor: Colors.grey.shade200,
+                            //             titleStyle: const TextStyle(
+                            //                 color: Colors.black),
+                            //             content: SingleChildScrollView(
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.all(10.0),
+                            //                 child: Column(
+                            //                   children: [
+                            //                     SizedBox(
+                            //                       height: Get.height * 0.015,
+                            //                     ),
+                            //                     TextFormField(
+                            //                       controller: profileViewModel
+                            //                           .phoneController.value,
+                            //                       decoration: InputDecoration(
+                            //                           focusedBorder:
+                            //                               OutlineInputBorder(
+                            //                             borderRadius:
+                            //                                 BorderRadius
+                            //                                     .circular(16),
+                            //                           ),
+                            //                           enabledBorder:
+                            //                               OutlineInputBorder(
+                            //                                   borderRadius:
+                            //                                       BorderRadius
+                            //                                           .circular(
+                            //                                               16)),
+                            //                           labelText: "Phone",
+                            //                           isDense: true),
+                            //                     ),
+                            //                     SizedBox(
+                            //                       height: Get.height * 0.015,
+                            //                     ),
+                            //                     TextFormField(
+                            //                       controller: profileViewModel
+                            //                           .emailController.value,
+                            //                       decoration: InputDecoration(
+                            //                           focusedBorder:
+                            //                               OutlineInputBorder(
+                            //                             borderRadius:
+                            //                                 BorderRadius
+                            //                                     .circular(16),
+                            //                           ),
+                            //                           enabledBorder:
+                            //                               OutlineInputBorder(
+                            //                                   borderRadius:
+                            //                                       BorderRadius
+                            //                                           .circular(
+                            //                                               16)),
+                            //                           labelText: "Email",
+                            //                           isDense: true),
+                            //                     ),
+                            //                     SizedBox(
+                            //                       height: Get.height * 0.015,
+                            //                     ),
+                            //                     TextFormField(
+                            //                       controller: profileViewModel
+                            //                           .addressController.value,
+                            //                       maxLines: 3,
+                            //                       decoration: InputDecoration(
+                            //                           focusedBorder:
+                            //                               OutlineInputBorder(
+                            //                             borderRadius:
+                            //                                 BorderRadius
+                            //                                     .circular(16),
+                            //                           ),
+                            //                           enabledBorder:
+                            //                               OutlineInputBorder(
+                            //                                   borderRadius:
+                            //                                       BorderRadius
+                            //                                           .circular(
+                            //                                               16)),
+                            //                           labelText: "Address",
+                            //                           isDense: true),
+                            //                     ),
+                            //                     SizedBox(
+                            //                       height: Get.height * 0.015,
+                            //                     ),
+                            //                     Row(
+                            //                       mainAxisAlignment:
+                            //                           MainAxisAlignment.end,
+                            //                       children: [
+                            //                         TextButton(
+                            //                             onPressed: () {
+                            //                               Get.back();
+                            //                             },
+                            //                             child: const Text(
+                            //                                 "Cancel")),
+                            //                         TextButton(
+                            //                             onPressed: () {
+                            //                               if (profileViewModel
+                            //                                   .phoneController
+                            //                                   .value
+                            //                                   .text
+                            //                                   .isEmpty) {
+                            //                                 Utils.snackBar(
+                            //                                     "Number Required",
+                            //                                     "Enter Your Number");
+                            //                               } else if (profileViewModel
+                            //                                   .emailController
+                            //                                   .value
+                            //                                   .text
+                            //                                   .isEmpty) {
+                            //                                 Utils.snackBar(
+                            //                                     "Email Required",
+                            //                                     "Enter Your Email");
+                            //                               } else if (profileViewModel
+                            //                                   .addressController
+                            //                                   .value
+                            //                                   .text
+                            //                                   .isEmpty) {
+                            //                                 Utils.snackBar(
+                            //                                     "Address Required",
+                            //                                     "Enter Your Address");
+                            //                               } else {
+                            //                                 Map data = {
+                            //                                   "name":
+                            //                                       profileViewModel
+                            //                                           .user
+                            //                                           .value
+                            //                                           .user!
+                            //                                           .name,
+                            //                                   "email": profileViewModel
+                            //                                       .emailController
+                            //                                       .value
+                            //                                       .text
+                            //                                       .toString(),
+                            //                                   "phone": profileViewModel
+                            //                                       .phoneController
+                            //                                       .value
+                            //                                       .text
+                            //                                       .toString(),
+                            //                                   "address":
+                            //                                       profileViewModel
+                            //                                           .addressController
+                            //                                           .value
+                            //                                           .text
+                            //                                           .toString(),
+                            //                                 };
+                            //                                 profileViewModel
+                            //                                     .updateProfile(
+                            //                                         data);
+                            //                                 Get.back();
+                            //                               }
+                            //                             },
+                            //                             child: const Text(
+                            //                                 "Update")),
+                            //                       ],
+                            //                     )
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ));
+                            //       },
+                            //       child: Column(
+                            //         children: const [
+                            //           Icon(
+                            //             Icons.edit_outlined,
+                            //             color: Colors.white,
+                            //           ),
+                            //           Text(
+                            //             "Update\nprofile",
+                            //             textAlign: TextAlign.center,
+                            //             style: TextStyle(
+                            //                 fontSize: 10, color: Colors.white),
+                            //           ),
+                            //         ],
+                            //       ),
+                            //     ))
                           ],
                         ),
                       ),
@@ -347,7 +320,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           flex: 1,
                           child: InkWell(
                             onTap: () {
-                              Get.to(const OrderScreen());
+                              Get.to(const OrderPage());
                             },
                             child: Container(
                               margin: const EdgeInsets.only(left: 20, right: 8),

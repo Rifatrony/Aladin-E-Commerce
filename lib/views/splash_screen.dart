@@ -47,7 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Image(
               height: Get.height * 0.2,
               width: Get.height * 0.6,
-              image: const AssetImage("assets/aladin.png")
+              image: const AssetImage("assets/splash_pic.jpg")
             ),
 
             SizedBox(height: Get.height * 0.1),
