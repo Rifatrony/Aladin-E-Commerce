@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     title: "Login",
-                    color: Colors.deepOrangeAccent,
+                    color: Colors.deepOrangeAccent.shade400,
                 ),
               ),
               SizedBox(height: Get.height * 0.05),
@@ -115,14 +115,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Get.offAll(() => const SignUpScreen());
                 },
                 child: RichText(
-                  text: const TextSpan(
+                  text:  TextSpan(
                     text: 'No account yet? ',
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                     children: [
                       TextSpan(
                         text: 'Sign Up',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.deepOrangeAccent),
+                            fontWeight: FontWeight.bold, color: Colors.deepOrangeAccent.shade400),
                       ),
                     ],
                   ),

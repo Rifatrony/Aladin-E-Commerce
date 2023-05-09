@@ -2,6 +2,8 @@
 //
 //     final customOrderListModel = customOrderListModelFromJson(jsonString);
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 CustomOrderListModel customOrderListModelFromJson(String str) => CustomOrderListModel.fromJson(json.decode(str));

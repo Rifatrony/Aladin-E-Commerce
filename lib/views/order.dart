@@ -16,7 +16,7 @@ class _OrderPageState extends State<OrderPage> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.deepOrangeAccent,
+            backgroundColor: Colors.deepOrangeAccent.shade400,
             elevation: 0,
             title: const Text("Order"),
             bottom: const TabBar(

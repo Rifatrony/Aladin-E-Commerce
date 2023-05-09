@@ -27,7 +27,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Order Details"),
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrangeAccent.shade400,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -38,45 +38,100 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               () => controller.detailsLoading.value
                   ? const Center(child: CircularProgressIndicator())
                   : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        RowItem(title: "Name", value: controller.orderDetails.value.name.toString()),
-                        RowItem(title: "Order Id", fontWeight: FontWeight.bold, value:  controller.orderDetails.value.orderid.toString()),
-                        RowItem(title: "Status", value: controller.orderDetails.value.status.toString()),
-                        RowItem(title: "Sub Total", value: controller.orderDetails.value.subTotal.toString()),
-                        RowItem(title: "Delivery Charge", value: controller.orderDetails.value.deliveryRate.toString()),
-                        RowItem(title: "total", value: controller.orderDetails.value.total.toString()),
-                        RowItem(title: "Delivery", value: controller.orderDetails.value.delivery.toString()),
-                        RowItem(title: "Phone", value: controller.orderDetails.value.phone.toString()),
-                        RowItem(title: "Address", value: controller.orderDetails.value.address.toString()),
-
-                        SizedBox(height: Get.height * 0.02,),
-              
+                        RowItem(
+                            title: "Name",
+                            value:
+                                controller.orderDetails.value.name.toString()),
+                        RowItem(
+                            title: "Order Id",
+                            fontWeight: FontWeight.bold,
+                            value: controller.orderDetails.value.orderid
+                                .toString()),
+                        RowItem(
+                            title: "Status",
+                            value: controller.orderDetails.value.status
+                                .toString()),
+                        RowItem(
+                            title: "Sub Total",
+                            value: controller.orderDetails.value.subTotal
+                                .toString()),
+                        RowItem(
+                            title: "Delivery Charge",
+                            value: controller.orderDetails.value.deliveryRate
+                                .toString()),
+                        RowItem(
+                            title: "total",
+                            value:
+                                controller.orderDetails.value.total.toString()),
+                        RowItem(
+                            title: "Delivery",
+                            value: controller.orderDetails.value.delivery
+                                .toString()),
+                        RowItem(
+                            title: "Phone",
+                            value:
+                                controller.orderDetails.value.phone.toString()),
+                        RowItem(
+                            title: "Address",
+                            value: controller.orderDetails.value.address
+                                .toString()),
+                        SizedBox(
+                          height: Get.height * 0.02,
+                        ),
                         ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: controller.orderDetails.value.items!.length,
-                          itemBuilder: (context, index){
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric( vertical: 10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.grey.shade200
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount:
+                                controller.orderDetails.value.items!.length,
+                            itemBuilder: (context, index) {
+                              int? quantity = controller
+                                  .orderDetails.value.items![index].quantity;
+                              String? priceString = controller
+                                  .orderDetails.value.items![index].price;
+                              double price = double.parse(priceString!);
+
+                              double unitPrice = price / quantity!;
+                              // double uintPrice = (controller.orderDetails.value.items![index].price as double) / (controller.orderDetails.value.items![index].quantity as double);
+                              return Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 8),
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      color: Colors.grey.shade200),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      RowItem(
+                                          title: "Name",
+                                          value: controller.orderDetails.value
+                                              .items![index].name
+                                              .toString()),
+                                      RowItem(
+                                          title: "Quantity",
+                                          value: controller.orderDetails.value
+                                              .items![index].quantity
+                                              .toString()),
+                                      RowItem(
+                                          title: "Unit Price",
+                                          value: "$unitPrice"),
+                                      RowItem(
+                                          title:
+                                              "Total (${controller.orderDetails.value.items![index].quantity.toString()} x $unitPrice)",
+                                          value: controller.orderDetails.value
+                                              .items![index].price
+                                              .toString()),
+                                    ],
+                                  ),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RowItem(title: "Name", value: controller.orderDetails.value.items![index].name.toString()),
-                                    RowItem(title: "Quantity", value: controller.orderDetails.value.items![index].quantity.toString()),
-                                    RowItem(title: "Price", value: controller.orderDetails.value.items![index].price.toString()),
-                                    RowItem(title: "Total (${controller.orderDetails.value.items![index].quantity.toString()} x ${controller.orderDetails.value.items![index].price.toString()})", value: controller.orderDetails.value.items![index].total.toString()),
-                                  ],
-                                ),
-                              ),
-                            );
-                          })
-                        
+                              );
+                            })
                       ],
                     ),
             ),
@@ -91,7 +146,12 @@ class RowItem extends StatelessWidget {
   final String title, value;
   final double textSize;
   final FontWeight fontWeight;
-  const RowItem({super.key, required this.title, required this.value, this.textSize = 13, this.fontWeight = FontWeight.w400});
+  const RowItem(
+      {super.key,
+      required this.title,
+      required this.value,
+      this.textSize = 13,
+      this.fontWeight = FontWeight.w400});
 
   @override
   Widget build(BuildContext context) {
@@ -102,20 +162,14 @@ class RowItem extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              fontSize: textSize,
-              fontWeight: fontWeight
-            ),
+            style: TextStyle(fontSize: textSize, fontWeight: fontWeight),
           ),
           Text(
             value,
-            style: TextStyle(
-              fontSize: textSize,
-              fontWeight: fontWeight
-            ),
+            style: TextStyle(fontSize: textSize, fontWeight: fontWeight),
           ),
         ],
       ),
-    );      
+    );
   }
 }

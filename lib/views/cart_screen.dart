@@ -1,6 +1,6 @@
 import 'package:aladin_ecommerce/res/AppUrl.dart';
 import 'package:aladin_ecommerce/view_model/cart/cart_view_model.dart';
-import 'package:aladin_ecommerce/views/order_proceed.dart';
+import 'package:aladin_ecommerce/views/delivery_method_screen.dart';
 import 'package:aladin_ecommerce/widgets/app_button.dart';
 import 'package:aladin_ecommerce/widgets/app_text.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +15,12 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final controller = Get.put(CartViewModel());
-  // final deliveryMethodController = Get.put(DeliveryViewModel());
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrangeAccent.shade400,
         elevation: 0,
         title: const Text("My Cart"),
       ),
@@ -172,7 +172,7 @@ class _CartScreenState extends State<CartScreen> {
                             horizontal: 20, vertical: 8),
                         child: AppButton(
                           onPress: () {
-                            Get.to(const OrderProceedScreen());
+                            Get.to(const DeliveryScreen());
                           },
                           title: "Checkout",
                           color: Colors.greenAccent.shade400,

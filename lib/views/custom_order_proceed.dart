@@ -24,7 +24,7 @@ class _CustomOrderProceedScreenState extends State<CustomOrderProceedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrangeAccent.shade400,
         elevation: 0,
         title: const Text("Place Order"),
       ),
@@ -198,7 +198,7 @@ class _CustomOrderProceedScreenState extends State<CustomOrderProceedScreen> {
                             "product": widget.product
                           };
                           customOrderViewModel.createCustomOrder(data, AppUrl.customOrderUrl);
-                        }, title: "Place Order", height: 50, color: Colors.deepOrangeAccent,)
+                        }, title: "Place Order", height: 50, color: Colors.deepOrangeAccent.shade400,)
                     ],
                   ),
                 ),

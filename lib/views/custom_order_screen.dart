@@ -38,13 +38,13 @@ class _CustomOrderScreenState extends State<CustomOrderScreen> {
                           SizedBox(height: Get.height * 0.05,),
                           AppButton(onPress: (){
                             Get.offAll(const HomeScreen());
-                          }, title: "Back to home", color: Colors.deepOrangeAccent, height: 50,),
+                          }, title: "Back to home", color: Colors.deepOrangeAccent.shade400, height: 50,),
                           SizedBox(height: Get.height * 0.01,),
                           Container(
                             height: 50,
                             width: Get.width,
                             decoration: BoxDecoration(
-                              color: Colors.deepOrangeAccent,
+                              color: Colors.deepOrangeAccent.shade400,
                               borderRadius: BorderRadius.circular(16)
                             ),
                             child: TextButton.icon(

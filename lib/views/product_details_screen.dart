@@ -151,7 +151,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ),
                       ),
 
-                      SizedBox(height: Get.height * 0.02),
+                      SizedBox(height: Get.height * 0.03),
 
                       Obx(
                         () => AppButton(
@@ -164,6 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               cartViewModel.addToCart(
                                   data, "${AppUrl.addToCartUrl}/${widget.id}");
                             },
+                            color: Colors.deepOrangeAccent.shade400,
                             title: "Add to cart"),
                       )
                     ],

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:aladin_ecommerce/views/cart_screen.dart';
 import 'package:aladin_ecommerce/views/dashboard_screen.dart';
 import 'package:aladin_ecommerce/views/order.dart';
@@ -29,14 +31,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrangeAccent.shade400,
         type: BottomNavigationBarType.shifting,
         currentIndex: myIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home", backgroundColor: Colors.deepOrangeAccent),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: "Cart", backgroundColor: Colors.deepOrangeAccent),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt_outlined), label: "Order", backgroundColor: Colors.deepOrangeAccent),
-          BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: "Profile", backgroundColor: Colors.deepOrangeAccent),
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.home), label: "Home", backgroundColor: Colors.deepOrangeAccent.shade400),
+          BottomNavigationBarItem(icon: const Icon(Icons.shopping_bag_outlined), label: "Cart", backgroundColor: Colors.deepOrangeAccent.shade400),
+          BottomNavigationBarItem(icon: const Icon(Icons.list_alt_outlined), label: "Order", backgroundColor: Colors.deepOrangeAccent.shade400),
+          BottomNavigationBarItem(icon: const Icon(Icons.person_outline), label: "Profile", backgroundColor: Colors.deepOrangeAccent.shade400),
         ],
         onTap: (index) {
           setState(() {

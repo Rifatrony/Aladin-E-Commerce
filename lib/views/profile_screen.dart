@@ -1,4 +1,3 @@
-import 'package:aladin_ecommerce/utils/utils.dart';
 import 'package:aladin_ecommerce/view_model/accounts/profile_view_model.dart';
 import 'package:aladin_ecommerce/view_model/auth/user_preference.dart';
 import 'package:aladin_ecommerce/views/login_screen.dart';

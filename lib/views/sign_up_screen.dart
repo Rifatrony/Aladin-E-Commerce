@@ -156,7 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller.signUpApi(data);
                       }
                     },
-                    title: "Sign Up", color: Colors.deepOrangeAccent,),
+                    title: "Sign Up", color: Colors.deepOrangeAccent.shade400,),
               ),
               SizedBox(height: Get.height * 0.05),
               InkWell(
@@ -164,15 +164,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Get.offAll(() => const LoginScreen());
                 },
                 child: RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     text: 'Already have account? ',
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Color.fromARGB(255, 46, 16, 16), fontSize: 16),
                     children: [
                       TextSpan(
                         text: 'Login here',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.deepOrangeAccent),
+                            fontWeight: FontWeight.bold, color: Colors.deepOrangeAccent.shade400),
                       ),
                     ],
                   ),

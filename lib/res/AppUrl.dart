@@ -34,4 +34,5 @@ class AppUrl {
   static const String orderDetailsUrl = '$baseUrl/user/order/details';
 
   static const String deliveryMethodUrl = '$baseUrl/checkout/delivery/methods';
+  static const String proceedOrderUrl = '$baseUrl/checkout/process';
 }

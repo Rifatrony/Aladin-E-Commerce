@@ -28,7 +28,7 @@ class _CategoryWiseProductScreenState extends State<CategoryWiseProductScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.deepOrangeAccent.shade400,
         elevation: 0,
         title: Text(widget.category),
       ),
